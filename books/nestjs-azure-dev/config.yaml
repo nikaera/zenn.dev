@@ -1,0 +1,17 @@
+title: "Azure Functions の開発環境を NestJS で構築する方法"
+summary: "業務で NestJS を用いて Azure Functions の開発を行った際の知見を含めた形で、開発環境構築の手順についてまとめた薄い本となっております。"
+topics: ["nodejs", "nestjs", "azure", "azurefunctions", "azurecosmosdb"]
+published: false
+price: 0
+chapters:
+  - introduction
+  - dev-nestjs-azure-functions
+  - dev-azure-cosmosdb
+  - create-nestjs-typeorm
+  - create-nestjs-controller
+  - e2e-test-nestjs
+  - e2e-test-docker-compose
+  - e2e-test-github-actions
+  - create-env-azure-functions
+  - deploy-azure-functions-github-actions
+  - conclusion
