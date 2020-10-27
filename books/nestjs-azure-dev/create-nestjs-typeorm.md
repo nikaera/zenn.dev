@@ -71,7 +71,7 @@ npm run start:azure
 ![http://localhost:7071/api/database-uri のアクセス結果](https://i.gyazo.com/5023493e3c711e1fb5d9b089d9d9a658.png)
 *http://localhost:7071/api/database-uri のアクセス結果*
 
-:::message
+:::message alert
 無事に変数が読み込めていそうなことが確認できたら `getDatabaseURI` 関数は削除しておきましょう。本番環境でこの API が残っているとセキュリティ上問題があります。
 :::
 
