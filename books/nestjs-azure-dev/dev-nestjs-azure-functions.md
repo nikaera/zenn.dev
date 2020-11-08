@@ -2,7 +2,7 @@
 title: "NestJS + Azure Functions の開発環境を構築する"
 ---
 
-## Azure Functions Core Tools の導入
+# Azure Functions Core Tools の導入
 
 Azure Functions の開発をする上で、ローカルで動作確認を行ったり、CI 環境構築をするためにターミナルからデプロイ作業を済ませたくなる状況が発生します。
 
@@ -10,7 +10,8 @@ Azure Functions の開発をする上で、ローカルで動作確認を行っ�
 
 ![公式サイトの手順](https://i.gyazo.com/96063b5c81bdc323174440c7b2709eb1.png)
 *公式サイトの Azure Functions Core Tools のインストール手順*
-## NestJS のインストール及び Azure Functions HTTP module の導入
+
+# NestJS のインストール及び Azure Functions HTTP module の導入
 
 [公式サイト](https://docs.microsoft.com/ja-jp/azure/azure-functions/durable/quickstart-js-vscode)を見る限り、現時点 (2020/10/23) では __Node.js のバージョンとして 10.x もしくは 12.x を利用する必要があります。本記事では v10.22.1 を利用しました。__
 
@@ -68,7 +69,7 @@ tree -I node_modules -L 2 ./
 これで Azure Functions の開発環境は整いました。
 早速動作検証が可能な状態となっているか確かめてみましょう。
 
-### ローカル環境で Azure Functions の環境を起動する
+## ローカル環境で Azure Functions の環境を起動する
 
 `src/app.controller.ts` の中に既に `getHello` 関数が存在しているので、`helloworld` というパスでアクセス可能な状態にしてみます。
 
@@ -100,7 +101,7 @@ export class AppController {
 
 画面上に `Hello World!` の文字列が表示されていれば成功です。
 
-## NestJS で機能開発を行うための準備をする
+# NestJS で機能開発を行うための準備をする
 
 本記事ではイベントを CRUD する機能を開発します。
 

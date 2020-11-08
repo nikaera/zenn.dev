@@ -2,7 +2,7 @@
 title: "おわりに"
 ---
 
-## 所感
+# 所感
 
 今回は NestJS を用いて Azure Functions の開発手順についてまとめました。他にも [Open API](https://docs.nestjs.com/openapi/introduction) に対応したのですが、どこかのタイミングでそれらの記事も追加したいと考えております。
 
@@ -12,7 +12,7 @@ Azure 関連のサービスも触るのは初めてだったのですが、ド�
 
 最後までお読みいただきありがとうございました。
 
-## 参考リンク
+# 参考リンク
 
 * [Documentation | NestJS - A progressive Node.js framework](https://docs.nestjs.com/)
 * [Azure Functions のドキュメント | Microsoft Docs](https://docs.microsoft.com/ja-jp/azure/azure-functions/)

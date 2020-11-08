@@ -2,7 +2,7 @@
 title: "NestJS で E2E テストを実装する"
 ---
 
-## CRUD 機能の E2E テストを実装する
+# CRUD 機能の E2E テストを実装する
 
 それではイベントの CRUD API の正常系及び異常系の E2E テストを書いていきます。
 
@@ -274,7 +274,7 @@ docker-compose down
 ![E2E テストの実行結果](https://i.gyazo.com/59c1cf9a4ac81f194af6de75b4ae0098.png)
 *E2E テストの実行結果 (失敗)*
 
-### E2E テストが通るようにイベントの CRUD 機能を改修する
+## E2E テストが通るようにイベントの CRUD 機能を改修する
 
 テストを通すために、例外処理周りの記述を追記していく際、NestJS の [Exception filters](https://docs.nestjs.com/exception-filters) を利用していきます。**NestJS の Exception filters を利用することで簡易に例外処理を実装することが可能になると同時に、適切な範囲でそれらの適用範囲を設定することが可能になります。**
 

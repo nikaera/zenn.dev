@@ -2,7 +2,7 @@
 title: "はじめに"
 ---
 
-## 概要
+# 概要
 
 [PlayFab](https://playfab.com/) の [CloudScript](https://docs.microsoft.com/ja-jp/gaming/playfab/features/automation/cloudscript/quickstart) 向けに [Azure Functions](https://azure.microsoft.com/ja-jp/services/functions/) の開発をすることになり、当初は [.NET Azure Functions](https://docs.microsoft.com/ja-jp/azure/azure-functions/functions-dotnet-class-library) の採用を検討していました。
 
@@ -23,7 +23,7 @@ title: "はじめに"
 * GitHub Actions を用いた CI 環境の構築
 * Azure KeyVault を用いたシークレット情報の管理までの手順
 
-## 動作環境
+# 動作環境
 
 * Azure Functions Core Tools
   * core 2.11.1

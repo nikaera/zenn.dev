@@ -2,7 +2,7 @@
 title: "TypeORM を用いて CRUD 機能を実装する"
 ---
 
-## NestJS の Configuration module でデータベースの接続情報を管理する
+# NestJS の Configuration module でデータベースの接続情報を管理する
 
 まずは TypeORM で MongoDB に接続するための情報を NestJS の [Configuration module](https://docs.nestjs.com/techniques/configuration) を使って管理できるようにします。
 
@@ -77,7 +77,7 @@ npm run start:azure
 
 これで TypeORM で MongoDB に接続するための情報を `ConfigModule` で管理できることが確認できました。
 
-## NestJS の TypeORM Module を導入してテーブルの定義を行う
+# NestJS の TypeORM Module を導入してテーブルの定義を行う
 
 次に NestJS の [TypeORM Module](https://github.com/nestjs/typeorm) をインストールします。また今回は MongoDB に接続するため [Mongoose](https://github.com/Automattic/mongoose) も同時にインストールしておきます。
 
@@ -157,7 +157,7 @@ import { Event, EventSchema } from './events.schema'
 export class EventsModule {}
 ```
 
-### TypeORM でイベントの CRUD 機能を実装する
+## TypeORM でイベントの CRUD 機能を実装する
 
 イベントテーブルを定義したクラス `Event` を用いて、まずは `EventsService` に CRUD を実装していきます。
 
