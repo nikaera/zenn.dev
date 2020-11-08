@@ -6,7 +6,7 @@ topics: ["serverless", "typescript", "nodejs"]
 published: true
 ---
 
-## はじめに
+# はじめに
 
 [Serverless Framework](https://www.serverless.com/) を使っていて、度々デプロイ時に手動で設定していた作業内容を自動化したいなと思い、プラグイン作成の知識習得も兼ねてライブラリを作成し [NPM](https://www.npmjs.com/) で公開してみました。
 
@@ -14,7 +14,7 @@ published: true
 
 今後も開発する可能性はありそうなので Serverless のプラグインを TypeScript で作成する際の手順をまとめておきました。各手順はザックリと紹介しつつ、**主にその過程でハマった点や工夫した点に重きをおいて記事を書いていきます。**
 
-## 動作環境
+# 動作環境
 
 - Node.js 12.19.0
 - Serverless Framework
@@ -23,7 +23,7 @@ published: true
   - SDK: 2.3.2
   - Components: 3.3.0
 
-## TypeScript で Serverless Plugin を開発する環境を整える
+# 開発環境を整える
 
 本記事の内容を最後まで実践した際の最終的なプロジェクトのディレクトリ構造は下記になります。
 
@@ -111,11 +111,11 @@ TypeScript のコンパイル時に必要となる `tsconfig.json` は下記の�
 
 `files` には `lib` フォルダを指定することで、TypeScript をコンパイルした結果のみがライブラリのソースコードとして取り込まれるようになります。
 
-## TypeScript で Serverless Plugin の開発を進める
+# Serverless プラグインの開発を進める
 
 開発環境が整ったところで早速 Serverless Plugin のソースコードを書いていきます。TypeScript のソースコードは `src/index.ts` に配置します。
 
-### Serverless Plugin のプログラムを書く
+## Serverless プラグインのプログラムを書く
 
 ```typescript:src/index.ts
 import * as Serverless from 'serverless'
@@ -250,7 +250,7 @@ custom:
 
 それでは、次にプラグインの動作検証用コードを `example` フォルダに配置していきます。
 
-### Serverless Plugin の動作検証用プログラムを書く
+## Serverless プラグインの動作検証用プログラムを書く
 
 `example` フォルダ内には検証用プロジェクトを作成するので、その前準備として `example/package.json` を作成します。
 
@@ -355,7 +355,7 @@ Serverless: Excluding development dependencies...
 
 標準出力にあるプラグイン内で出力したログから、適切に値が取得出来ていることが確認出来れば OK です。
 
-## Serverless プラグインの中で AWS Profile の切り替えが行えるか確認してみる
+## AWS Profile の切り替えができるか確認してみる
 
 Serverless プラグインでの Profile の切り替えについて、動作検証がまだ出来ていないので確認していきます。
 
@@ -463,13 +463,13 @@ Serverless: serverless-typescript profile: {"expired":false,"expireTime":null,"r
 # ...
 ```
 
-## おわりに
+# おわりに
 
 今回初めて Serverless プラグインの開発をしてみて、手軽に出来ることが分かったので自動化出来そうな作業は積極的にプラグイン化していきたいなと感じました。
 
 プラグイン化した後は Git リポジトリにアップするだけでなく、[NPM のパッケージ](https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry) や [GitHub Packages](https://docs.github.com/ja/free-pro-team@latest/packages/using-github-packages-with-your-projects-ecosystem/configuring-npm-for-use-with-github-packages) として公開しておくと、後々プラグインを利用する際に便利です。また、公開してライブラリのスタッツを見るのは案外楽しく開発のモチベーションにも繋がるのでオススメです。
 
-## 参考リンク
+# 参考リンク
 
 - [TypeScriptでServerless FrameworkのPluginを書いてみる | Developers.IO](https://dev.classmethod.jp/articles/create-serverless-framework-plugin-by-typescript/)
 - [typescript導入したprivateなnpmパッケージの作り方 - 30歳SIerからWEBエンジニアで奮闘](https://karuta-kayituka.hatenablog.com/entry/2020/04/05/124531)
