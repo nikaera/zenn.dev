@@ -2,8 +2,8 @@
 title: "GitHub 接続時の ~/.ssh/config の書き方"
 emoji: "🔥"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: ["ssh", "git", "github"]
-published: false
+topics: ["ssh", "git", "github", "初心者"]
+published: true
 ---
 
 # はじめに
