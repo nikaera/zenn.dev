@@ -1,5 +1,5 @@
 ---
-title: "Hugo + GitHub Pages で独自ドメインのウェブサイトを構築する"
+title: "Hugo + GitHub Pages + GitHub Actions で独自ドメインのウェブサイトを構築する"
 emoji: "😊"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["hugo", "githubactions", "githubpages"]
