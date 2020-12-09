@@ -42,7 +42,7 @@ choco install hugo-extended -confirm
 
 # Hugo で自分のウェブサイトを構築する
 
-## プロジェクトフォルダを作成する
+## Hugo プロジェクトを作成する
 
 下記コマンドで Hugo のプロジェクトフォルダを生成できます。
 
@@ -72,7 +72,7 @@ Hugo のコンフィグファイルのデフォルトフォーマットは [TOML
 ![Kiera というテーマのページ](https://i.gyazo.com/36ce79358e416ff6c92e7ad405c2abfa.png)
 **[Kiera](https://themes.gohugo.io/hugo-kiera/) というテーマのページ**
 
-## プロジェクトにテーマを適用する
+## Hugo プロジェクトにテーマを適用する
 
 テーマの適用方法については [公式サイトの手順](https://gohugo.io/getting-started/quick-start/#step-3-add-a-theme) で紹介されていますが、Hugo のプロジェクトフォルダのルートで下記コマンドを実行して、コンフィグファイルに `theme` を追記するだけです。
 
