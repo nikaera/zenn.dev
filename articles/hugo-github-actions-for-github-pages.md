@@ -250,3 +250,5 @@ git push origin main
 今回は Hugo を例にしましたが、本記事内で紹介した [GitHub Pages action](https://github.com/marketplace/actions/github-pages-action) は [様々な SSG](https://jamstack.org/generators/) に対応しています。そのため Hugo ではウェブサイトのカスタマイズに限界が来たなと感じたら [Next.js](https://nextjs.org/) や [Gatsby](https://www.gatsbyjs.com/) に乗り換えるといったことも可能です。
 
 また Hugo では何も考えずとも、マークダウンで記事が書けてビルドも高速なので、手っ取り早く自分のウェブサイトを構築してみたいという用途にはピッタリだと感じました。
+
+関係ないですが、Hugo でウェブサイト構築する際の知見も記事に含めてしまったせいで、文章量が意図した倍近い量になってしまいました。。簡潔で分かりやすい文章が書けるようにならなきゃ。。
