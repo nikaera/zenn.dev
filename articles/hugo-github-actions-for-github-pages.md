@@ -1,9 +1,9 @@
 ---
-title: "Hugo + GitHub Actions で独自ドメインのウェブサイトを構築する (HTTPS 対応)"
+title: "Hugo + GitHub Pages で独自ドメインのウェブサイトを構築する"
 emoji: "😊"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["hugo", "githubactions", "githubpages"]
-published: false
+published: true
 ---
 
 # はじめに
@@ -252,3 +252,18 @@ git push origin main
 また Hugo では何も考えずとも、マークダウンで記事が書けてビルドも高速なので、手っ取り早く自分のウェブサイトを構築してみたいという用途にはピッタリだと感じました。
 
 関係ないですが、Hugo でウェブサイト構築する際の知見も記事に含めてしまったせいで、文章量が意図した倍近い量になってしまいました。。簡潔で分かりやすい文章が書けるようにならなきゃ。。
+
+# 参考リンク
+
+- [The world’s fastest framework for building websites | Hugo](https://gohugo.io/)
+- [Complete List | Hugo Themes](https://themes.gohugo.io/)
+- [GitHub Pages について - GitHub Docs](https://docs.github.com/ja/free-pro-team@latest/github/working-with-github-pages/about-github-pages)
+- [GitHub Pages action](https://github.com/marketplace/actions/github-pages-action)
+- [Install Hugo | Hugo](https://gohugo.io/getting-started/installing/)
+- [Quick Start | Hugo](https://gohugo.io/getting-started/quick-start/#step-3-add-a-theme)
+- [Host on GitHub | Hugo](https://gohugo.io/hosting-and-deployment/hosting-on-github/)
+- [GitHub Pages | Websites for you and your projects, hosted directly from your GitHub repository. Just edit, push, and your changes are live.](https://pages.github.com/)
+- [デプロイキーの管理 - GitHub Docs](https://docs.github.com/ja/free-pro-team@latest/developers/overview/managing-deploy-keys#%E3%83%87%E3%83%97%E3%83%AD%E3%82%A4%E3%82%AD%E3%83%BC)
+- [暗号化されたシークレット - GitHub Docs](https://docs.github.com/ja/free-pro-team@latest/actions/reference/encrypted-secrets#%E3%83%AA%E3%83%9D%E3%82%B8%E3%83%88%E3%83%AA%E3%81%AE%E6%9A%97%E5%8F%B7%E5%8C%96%E3%81%95%E3%82%8C%E3%81%9F%E3%82%B7%E3%83%BC%E3%82%AF%E3%83%AC%E3%83%83%E3%83%88%E3%81%AE%E4%BD%9C%E6%88%90)
+- [GitHub Pages サイトのカスタムドメインを管理する - GitHub Docs](https://docs.github.com/ja/free-pro-team@latest/github/working-with-github-pages/managing-a-custom-domain-for-your-github-pages-site)
+- [HTTPS で GitHub Pages サイトを保護する - GitHub Docs](https://docs.github.com/ja/free-pro-team@latest/github/working-with-github-pages/securing-your-github-pages-site-with-https)
