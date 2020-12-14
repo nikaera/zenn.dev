@@ -427,7 +427,7 @@ return await this.cloudFront.updateDistribution({
 
 # おわりに
 
-ニッチな内容かつ、最近 [CloudFormation が MediaPackage にも対応した](https://dev.classmethod.jp/articles/update-aws-elemental-mediapackage-cloudformation/)ので、本記事内容を今後も利用するかどうかは分かりませんが一応得た知見を記事として残しておきました。
+ニッチな内容なので、本記事内容を今後利用するかどうかは分かりませんが、一応得た知見を記事として残しておきました。同様のことを行う必要が出てきた方の参考になれれば幸いです。
 
 # 参考リンク
 
