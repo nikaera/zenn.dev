@@ -203,8 +203,8 @@ export class CloudFrontClientForMediaPackage {
                 8. CacheBehaviors のいずれにも当てはまらなかった場合の
                 キャッシュの振る舞いを定義します。
 
-                MediaPackage はクエリ文字列に start, m, end を利用しているので、
-                それらは WhitelistedNames に含め QueryString には true を指定しておきます。
+                MediaPackage は タイムシフト表示機能を使用する際等で、クエリ文字列に start, m, end を利用しています。
+                そのため、それらの文字列は WhitelistedNames に含め QueryString には true を指定しておきます。
 
                 DefaultCacheBehavior に引っかかる挙動は例外的扱いなので、
                 使用するオリジンは MediaPackage サービスのものを設定します。
@@ -433,4 +433,5 @@ return await this.cloudFront.updateDistribution({
 
 - [Class: AWS.CloudFormation — AWS SDK for JavaScript](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/CloudFormation.html)
 - [Amazon CloudFront を MediaPackage に使用する - AWS Elemental MediaPackage](https://docs.aws.amazon.com/ja_jp/mediapackage/latest/ug/cdns-cf.html)
-- [Required fields for creating and updating distributions \- Amazon CloudFront](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/distribution-overview-required-fields.html)
+- [Required fields for creating and updating distributions - Amazon CloudFront](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/distribution-overview-required-fields.html)
+- [CloudFront と AWS Media Services によるライブストリーミングビデオの配信](https://docs.aws.amazon.com/ja_jp/AmazonCloudFront/latest/DeveloperGuide/live-streaming.html)
