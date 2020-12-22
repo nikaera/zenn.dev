@@ -86,7 +86,7 @@ ReactDOM.render(
 
 これで React + TypeScript の開発環境が整いました。
 
-# RSS リーダーを JavaScript で実装する
+# RSS リーダーを実装する
 
 あとは一般的な Web フロントエンド開発の流れで RSS リーダーの開発を進めていくだけです。
 
