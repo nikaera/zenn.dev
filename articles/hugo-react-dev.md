@@ -1,5 +1,5 @@
 ---
-title: "Hugo で React + TypeScript でサクッとウェブサイトに RSS リーダーを追加する"
+title: "Hugo で React + TypeScript を利用してサクッとウェブサイトに RSS リーダーを追加する"
 emoji: "⛳"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["hugo", "react", "rss", "javascript", "typescript"]
@@ -8,14 +8,16 @@ published: false
 
 # はじめに
 
-Hugo のウェブサイトに組み込む RSS リーダーを JavaScript で開発してみたいと思い調査したところ、Hugo の最新版には [ESBuild](https://github.com/evanw/esbuild) が組み込まれていて、**非常に手厚く JavaScript の開発環境がサポートされていることが分かりました。** 本記事では紹介していませんが [Babel](https://gohugo.io/hugo-pipes/babel/) も利用できるようです。
+Hugo のウェブサイトに組み込む RSS リーダーを TypeScript で開発してみたいと思い調査したところ、Hugo の最新版には [ESBuild](https://github.com/evanw/esbuild) が組み込まれていて、**非常に手厚く JavaScript の開発環境がサポートされていることが分かりました。** 本記事では紹介していませんが [Babel](https://gohugo.io/hugo-pipes/babel/) も利用できるようです。
 
 また、NPM パッケージも利用できるため、普段のウェブ開発と同様の流れで開発ができ、各種ライブラリを用いた開発も非常に楽でした。
 今回は Hugo で JavaScript 開発する方法を RSS リーダーの開発を例に上げ、そこで得た知見についても交える形で記事として残しておくことにしました。
 
 **ちなみに本記事内容は Hugo で JavaScript 開発する方法に焦点を絞ったものなのですが、ウェブサイトに RSS リーダーを組み込むことに焦点を絞って見たい方は [`RSS リーダーを Hugo の Data Templates で実装する`](#(%E4%BD%99%E8%AB%87)-rss-%E3%83%AA%E3%83%BC%E3%83%80%E3%83%BC%E3%82%92-hugo-%E3%81%AE-data-templates-%E3%81%A7%E5%AE%9F%E8%A3%85%E3%81%99%E3%82%8B) から見ていただくことをオススメします。**
 
-# Hugo で React + TypeScript の開発環境を整える
+# Hugo で JavaScript (React + TypeScript) の開発環境を整える
+
+まず、**TypeScript のビルドは ESBuild に任せることができるため何も行う必要はありません。** そのため React 開発用パッケージのインストールのみ行えば大丈夫です。
 
 Hugo プロジェクトのルートディレクトリで下記コマンドを実行し、`package.json` を作成してから、React の開発に必要なパッケージをインストールします。
 
