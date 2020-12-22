@@ -6,6 +6,8 @@ topics: ["hugo", "githubactions", "githubpages"]
 published: true
 ---
 
+この記事は [Static Site Generator Advent Calendar 2020](https://qiita.com/advent-calendar/2020/static-site-generator) 10日目の記事です。
+
 # はじめに
 
 ![Hugo のトップページ](https://i.gyazo.com/ffe8fe276b9d008461880581002430ec.png)
