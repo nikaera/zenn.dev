@@ -3,7 +3,7 @@ title: "Hugo で React + TypeScript を利用してサクッとウェブサイ�
 emoji: "⛳"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["hugo", "react", "rss", "javascript", "typescript"]
-published: false
+published: true
 ---
 
 # はじめに
