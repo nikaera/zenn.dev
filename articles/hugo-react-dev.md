@@ -10,7 +10,8 @@ published: false
 
 Hugo のウェブサイトに組み込む RSS リーダーを JavaScript で開発してみたいと思い調査したところ、Hugo の最新版には [ESBuild](https://github.com/evanw/esbuild) が組み込まれていて、**非常に手厚く JavaScript の開発環境がサポートされていることが分かりました。** 本記事では紹介していませんが [Babel](https://gohugo.io/hugo-pipes/babel/) も利用できるようです。
 
-また、NPM パッケージも利用できるため、普段のウェブ開発と同様の流れで開発ができ、各種ライブラリを用いた開発も非常に楽でした。今回は Hugo で JavaScript 開発する方法を RSS リーダーの開発を例に上げ、そこで得た知見についても交える形で記事として残しておくことにしました。
+また、NPM パッケージも利用できるため、普段のウェブ開発と同様の流れで開発ができ、各種ライブラリを用いた開発も非常に楽でした。
+今回は Hugo で JavaScript 開発する方法を RSS リーダーの開発を例に上げ、そこで得た知見についても交える形で記事として残しておくことにしました。
 
 **ちなみに本記事内容は Hugo で JavaScript 開発する方法に焦点を絞ったものなのですが、ウェブサイトに RSS リーダーを組み込むことに焦点を絞って見たい方は [`RSS リーダーを Hugo の Data Templates で実装する`](#(%E4%BD%99%E8%AB%87)-rss-%E3%83%AA%E3%83%BC%E3%83%80%E3%83%BC%E3%82%92-hugo-%E3%81%AE-data-templates-%E3%81%A7%E5%AE%9F%E8%A3%85%E3%81%99%E3%82%8B) から見ていただくことをオススメします。**
 
@@ -83,7 +84,7 @@ ReactDOM.render(
 
 これで React + TypeScript の開発環境が整いました。
 
-# React を用いて RSS リーダーを作成して Hugo に追加する
+# RSS リーダーを JavaScript で実装する
 
 あとは一般的な Web フロントエンド開発の流れで RSS リーダーの開発を進めていくだけです。
 
@@ -182,7 +183,7 @@ try {
 ![npm run update-rss を実行して出力した rss.json にブラウザからアクセスする](https://i.gyazo.com/9b7ebeedce1cb69b6b3ab8acacb0b1d1.png)
 **`http://localhost:1313/rss.json` にアクセスして出力した rss.json が参照可能なことを確認する**
 
-## RSS リーダーを JavaScript で実装する
+## RSS リーダーを React + TypeScript で実装する
 
 準備が整ったので、早速 RSS リーダーを作成していきます。
 
