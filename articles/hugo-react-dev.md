@@ -6,6 +6,8 @@ topics: ["hugo", "react", "rss", "javascript", "typescript"]
 published: true
 ---
 
+この記事は [Static Site Generator Advent Calendar 2020](https://qiita.com/advent-calendar/2020/static-site-generator) 22日目の記事です。
+
 # はじめに
 
 Hugo のウェブサイトに組み込む RSS リーダーを TypeScript で開発してみたいと思い調査したところ、Hugo の最新版には [ESBuild](https://github.com/evanw/esbuild) が組み込まれていて、**非常に手厚く JavaScript の開発環境がサポートされていることが分かりました。** 本記事では紹介していませんが [Babel](https://gohugo.io/hugo-pipes/babel/) も利用できるようです。
