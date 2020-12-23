@@ -6,7 +6,11 @@ topics: ["hugo", "react", "rss", "javascript", "typescript"]
 published: true
 ---
 
+::: message info
+
 この記事は [Static Site Generator Advent Calendar 2020](https://qiita.com/advent-calendar/2020/static-site-generator) 22日目の記事です。
+
+:::
 
 # はじめに
 
