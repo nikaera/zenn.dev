@@ -3,7 +3,7 @@ title: "AWS Lightsail Containers に Actix web をデプロイする"
 emoji: "⛵"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["docker", "rust", "aws", "lightsail"]
-published: false
+published: true
 ---
 
 # はじめに
