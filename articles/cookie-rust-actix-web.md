@@ -201,6 +201,10 @@ Actix web には [`Cookie` クラス](https://docs.rs/actix-web/3.3.2/actix_web/
 
 Actix web で割と汎用的に使えそうな知識として Cookie の設定方法について、メモ的な記事を書いてみました。引き続き、Rust への理解を深めるために [Bloggimg](https://github.com/nikaera/bloggimg) の開発を進めながら学習を進めていきます 🧑‍🎓
 
+:::message alert
+本記事の内容がセキュリティの観点から適切でない場合等はコメントでご指摘いただけますと幸いです。
+:::
+
 # 参考リンク
 
 * [Install Rust \- Rust Programming Language](https://www.rust-lang.org/tools/install)
