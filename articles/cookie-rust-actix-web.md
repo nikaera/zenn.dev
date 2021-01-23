@@ -19,6 +19,22 @@ published: true
 * Mac mini (M1, 2020)
   * Rust 1.49
   * Actix web 3
+  * Serde 1.0
+
+```toml:Cargo.toml
+[package]
+name = "cookie_test"
+version = "0.1.0"
+authors = ["nikaera"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+actix-web = "3"
+serde = { version = "1.0", features = ["derive"] }
+
+```
 
 # Actix web で Cookie をセットする
 
