@@ -3,7 +3,7 @@ title: "Actix web で HttpOnly な Cookie を設定する"
 emoji: "🍪"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["rust", "actixweb", "cookie"]
-published: false
+published: true
 ---
 
 # はじめに
@@ -166,11 +166,12 @@ async fn main() -> std::io::Result<()> {
 
 ```
 
-ザッとインラインコメントで説明していますが、最も重要な `set_cookie` 関数について簡単に説明します。
+ザッとインラインコメントで説明していますが、  
+最も重要な `set_cookie` 関数について簡単に説明します。
 
 Actix web には [`Cookie` クラス](https://docs.rs/actix-web/3.3.2/actix_web/http/struct.Cookie.html)が存在します。この `Cookie` クラスは Cookie 文字列を生成したり、パースしたりするのに役立ちます。`set_cookie` 関数では、Cookie を生成するための関数 [`Cookie::build`](https://docs.rs/actix-web/3.3.2/actix_web/http/struct.Cookie.html#method.build) を利用しています。
 
-`Cookie::build` 関数を利用することで、メソッドチェインで Cookie の値や属性を設定できます。作成した Cookie は `to_string` 関数を使用することで文字列として出力できます。出力した Cookie 文字列を HTTP レスポンスヘッダーに `Set-Cookie` として設定すれば Cookie を設定できます。
+`Cookie::build` 関数を利用することで、メソッドチェインで Cookie の値や属性を設定できます。**作成した Cookie は `to_string` 関数を使用することで文字列として出力できます。出力した Cookie 文字列を HTTP レスポンスヘッダーに `Set-Cookie` として設定すれば Cookie を設定できます。**
 
 # 動作検証
 
