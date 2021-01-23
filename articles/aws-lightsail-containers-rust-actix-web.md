@@ -10,11 +10,11 @@ published: false
 
 [Actix web](https://github.com/actix/actix-web) で Web アプリケーションを作ったのですが、技術勉強も兼ねていたので、デプロイ先も今まで試したことがないものを試そうとしていました。そこで、日頃業務でも AWS を利用しているということもあり、去年末に発表された [AWS Lightsail Containers](https://aws.amazon.com/jp/about-aws/whats-new/2020/11/announcing-amazon-lightsail-containers/) をデプロイ先に採用しました。
 
-AWS Lightsail Containers へのデプロイ自体は非常に簡単でした。また、デプロイにあたり Rust の Docker イメージ作成のやり方も学べました。今回はそのあたりの手順をまとめる形で記事として残しておくことにしました。
+AWS Lightsail Containers へのデプロイ自体は非常に簡単でした。また、デプロイにあたり Rust の Docker イメージ作成のやり方も学べました。今回はそのあたりの手順をまとめる形で記事として書き残しておくことにしました。
 
 # Actix web の Docker イメージを作成する
 
-開発したアプリケーションでは React でフロントエンド開発をしていて、ビルドしたものを Actix web に乗せる形で公開しています。そのため、下記の Dockerfile ではマルチステージビルドを利用しておりますが、本質的には `FROM rust:1.49` 以降の記述が Actix web に関するものとなります。
+開発したアプリケーションでは React でフロントエンド開発をしていて、ビルドしたものを Actix web の public フォルダに配置する形で公開しています。そのため、下記の Dockerfile ではマルチステージビルドを利用しておりますが、本質的には `FROM rust:1.49` 以降の記述が Actix web に関するものとなります。
 
 ```Dockerfile:Dockerfile
 # React ビルド用のイメージ
@@ -51,19 +51,19 @@ RUN ls | grep -v -E 'templates' | xargs rm -r
 COPY --from=client_builder /client/build ./build
 RUN mkdir tmp
 
-# Actix web を起動する
+# `cargo install` コマンドで生成したビルドを実行して Actix web を起動する
 # 下記のコマンド名称は Cargo.toml 内の [package.name] に準ずる
 CMD ["bloggimg-server"]
 
 ```
 
-また、**Docker ビルド時のオプション管理を楽にするため、Docker Compose を利用しました。単一の Docker イメージをビルドする際にも利用しておくことで、後々コンテナを追加して連携させたいときにも便利でオススメです。**
+また、**Docker ビルド時のオプション管理を楽にするため、Docker Compose を利用しました。単一の Docker イメージをビルドする際にも利用しておくことで、後々コンテナを追加して連携させたいときにも即座に対応できたりでオススメです。**
 
 ```yml:docker-compose.yml
 # context に Actix web プロジェクトのパスを指定する
 # args に Docker ビルド時に利用したい ARGS の値を環境変数で設定する
-# image に Docker のイメージ/タグ名を指定する (今回は DockerHub にデプロイする想定)
-# env_file に動作検証時に利用したい dotenv ファイルを指定する
+# image に Docker の <イメージ名:タグ名> を指定する (今回は Docker Hub にデプロイする想定)
+# env_file に開発/動作検証時に利用したい dotenv ファイルを指定する
 # ports にポートマッピングの設定を書く
 
 version: '3.8'
@@ -80,25 +80,25 @@ services:
       - ./server/.env
     ports:
       - 8080:8080
-
+ 
 ```
 
-上記を自分の手元の Actix web プロジェクトに応じて改変し `docker-compose build` を実行して Docker イメージをビルドします。ビルドに成功したら次は DockerHub にイメージを push します。
+上記を自分の Actix web プロジェクトに応じて改変し `docker-compose up` して動作検証します。動作検証ができ次第、`docker-compose build` を実行して Docker イメージをビルドします。ビルドに成功したら次は Docker Hub にイメージを push します。
 
-# DockerHub にビルドしたイメージを push する
+# Docker Hub にビルドしたイメージを push する
 
-今回は AWS Lightsail Containers で使用するイメージの管理に DockerHub を利用します。DockerHub へ push する前に `docker login --username=<DockerHub のユーザ名>` コマンドで DockerHub へのログインを済ませておきます。
+今回は AWS Lightsail Containers で使用するイメージの管理に [Docker Hub](https://hub.docker.com/) を利用します。Docker Hub へ push する前に `docker login --username=<Docker Hub のユーザ名>` コマンドで Docker Hub へのログインを済ませておきます。
 
-その後 `docker-compose push` コマンドで Docker イメージを DockerHub に push します。
+その後 `docker-compose push` コマンドで Docker イメージを Docker Hub に push します。
 
 ![スクリーンショット 2021-01-23 20.37.39.png](https://i.gyazo.com/06ce4ca43a26c73c227b9eb768f65685.png)
-**DockerHub のページから、正常に Docker イメージが push できていそうか確認する**
+**Docker Hub のページから、正常に Docker イメージが push できていそうか確認する**
 
 Docker イメージの push が成功していることを確認できたら、残りは AWS Console 上での作業になります。
 
 # AWS Console から Lightsail Containers Service を作成する
 
-AWS Console にログイン後、Lightsail サービスを選択して Lightsail サービスのトップページへ遷移します。遷移したら Containers タブを選択し、`Create container services` ボタンから Container Service を作成します。
+AWS Console にログイン後、[Lightsail サービス](https://lightsail.aws.amazon.com/ls/webapp/home/containers) を選択して Lightsail サービスのトップページへ遷移します。遷移したら Containers タブを選択し、`Create container services` ボタンから Container Service を作成します。
 
 ![スクリーンショット 2021-01-23 18.55.16.png](https://i.gyazo.com/42a8e6fa6224a6a52212cdb7461a8515.png)
 **AWS Console へログイン後 Lightsail のページに遷移して、Containers タブを選択する**
@@ -114,7 +114,7 @@ AWS Console にログイン後、Lightsail サービスを選択して Lightsail
 **`Set up deployment` の部分をクリックして、デプロイの設定項目を表示する**
 
 ![スクリーンショット 2021-01-23 19.12.14.png](https://i.gyazo.com/da0fd3ce440f441082a367a0dfe350b6.png)
-**DockerHub イメージを利用してデプロイする際に必要な設定項目を入力する**
+**Docker Hub イメージを利用してデプロイする際に必要な設定項目を入力する**
 
 ![スクリーンショット 2021-01-23 19.16.16.png](https://i.gyazo.com/eefec162ec66adab937d5139f70763cc.png)
 **コンテナのヘルスチェックのための情報を入力する**
@@ -128,7 +128,7 @@ AWS Console にログイン後、Lightsail サービスを選択して Lightsail
 ![スクリーンショット 2021-01-23 19.39.55.png](https://i.gyazo.com/eaaf0b1f1d2b2d37807d49764cafa681.png)
 **正常にデプロイできていれば `Deployment versions` の項目が Active になる**
 
-デプロイが完了したら Public domain が発行されているはずなので、正常にアクセスして Web アプリケーションが利用できそうか確認します。
+デプロイが完了したら `Public domain` が発行されているはずなので、正常にアクセスして Web アプリケーションが利用できそうか確認します。`Public domain` は該当する Container Service のトップページから確認できます。
 
 ![スクリーンショット 2021-01-23 19.48.23.png](https://i.gyazo.com/9ee36e7f1018c47a9c12e51ebe6df6d0.png)
 **AWS Lightsail Containers のトップページにある `Public domain` から動作検証する**
@@ -140,7 +140,7 @@ AWS Console にログイン後、Lightsail サービスを選択して Lightsail
 
 # (おまけ) 独自ドメインで Container Service へアクセス可能にする
 
-AWS Lightsail Containers ではカスタムドメインの紐付け及び、HTTPS 化も簡単に設定できます。`Custom domains` タブを選択した後、画面下部にある `Create certificate` リンクをクリックすることで設定画面を表示します。
+AWS Lightsail Containers では独自ドメインの紐付け及び、HTTPS 化も簡単に設定できます。`Custom domains` タブを選択した後、画面下部にある `Create certificate` リンクをクリックすることで設定画面を表示します。
 
 ![スクリーンショット 2021-01-23 20.07.22.png](https://i.gyazo.com/93019714418209872be82c396931beee.png)
 **`Custom domain` タブをクリックしてから、`Create certificate` リンクをクリックする**
@@ -154,7 +154,7 @@ AWS Lightsail Containers ではカスタムドメインの紐付け及び、HTTP
 ![スクリーンショット 2021-01-23 20.20.26.png](https://i.gyazo.com/3aa4608c22ab83193d75b3e968d47b77.png)
 **正常に CNAME レコードを設定した後、しばらく経つと Status が Valid になる**
 
-上記まで確認したら、`Create certificate` で設定したドメインの CNAME レコードに `Public domain` の値を設定しておきます。設定内容が反映され次第、カスタムドメインへアクセスすることで HTTPS 経由で Container Service へアクセスできるようになります。
+上記まで確認したら、`Create certificate` で設定したドメインの CNAME レコードに `Public domain` の値を設定しておきます。設定内容が反映され次第、独自ドメインへアクセスすることで HTTPS 経由で Container Service へアクセスできるようになります。
 
 ![スクリーンショット 2021-01-23 20.27.26.png](https://i.gyazo.com/21d69cbc2370b588e01cfae43afa50ca.png)
 **`Custom domains` で Container Service で起動しているサービスにアクセスできることを確認する**
@@ -170,4 +170,3 @@ AWS Lightsail Containers を利用して Actix web プロジェクトをデプ�
 * [Lightsail コンテナ: クラウドでコンテナを実行する簡単な方法 \| Amazon Web Services ブログ](https://aws.amazon.com/jp/blogs/news/lightsail-containers-an-easy-way-to-run-your-containers-in-the-cloud/)
 * [rust \- Docker Hub](https://hub.docker.com/_/rust)
 * [Enabling custom domains for your Amazon Lightsail distributions \| Lightsail Documentation](https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-enabling-distribution-custom-domains)
-* 
