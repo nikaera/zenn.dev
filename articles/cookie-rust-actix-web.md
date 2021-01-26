@@ -2,7 +2,7 @@
 title: "Actix web で HttpOnly な Cookie を設定する"
 emoji: "🍪"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: ["rust", "actixweb", "cookie"]
+topics: ["rust", "actixweb", "cookie", "authentication"]
 published: true
 ---
 
