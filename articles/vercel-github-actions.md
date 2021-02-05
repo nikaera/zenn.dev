@@ -104,6 +104,15 @@ jobs:
       - uses: actions/checkout@v2
         with:
           ref: ${{ github.event.inputs.ref }}
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '15'
+      # 投稿内容を更新するために npm run build:posts を走らせる
+      - name: Recreate all posts
+        shell: bash
+        run: |
+          npm install
+          npm run build:posts
       - uses: amondnet/vercel-action@v20
         with:
           # GitHub Actions の Secrets で作成した値を参照する形で
