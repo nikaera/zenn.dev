@@ -3,7 +3,7 @@ title: "Gatling で複数ユーザ認証した情報を元に負荷テストす�
 emoji: "🔫"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["gatling", "scala", "test", "web"]
-published: false
+published: true
 ---
 
 # はじめに
