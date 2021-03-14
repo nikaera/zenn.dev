@@ -309,6 +309,7 @@ class TestCloudFunctionSimulation extends Simulation {
     val map: Map[String, Option[Any]] =
       playfab.asInstanceOf[Map[String, Option[Any]]];
 
+    // 愚直に JSON オブジェクトのパースを行い、必要な情報を変数に取り出す。
     val data = map.get("data").get.asInstanceOf[Map[String, Option[Any]]];
     val entityTokenInfo =
       data.get("EntityToken").get.asInstanceOf[Map[String, Option[Any]]];
