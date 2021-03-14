@@ -2,7 +2,7 @@
 title: "Gatling で複数ユーザ認証した情報を元に負荷テストする"
 emoji: "🔫"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: ["gatling", "scala"]
+topics: ["gatling", "scala", "test", "web"]
 published: false
 ---
 
@@ -164,7 +164,7 @@ class AccessSimulation extends Simulation {
 
 ```
 
-ファイル作成が完了したら、再度 `./bin/gatling.sh` を実行して、実際に負荷テストを行ってみます。
+再度 `./bin/gatling.sh` を実行して、実際に負荷テストを行ってみます。
 
 ```bash
 ⊨ ./bin/gatling.sh                   ~/D/gatling-charts-highcharts-bundle-3.5.1
@@ -212,11 +212,11 @@ Reports generated in 0s.
 Please open the following file: /Users/nika/Desktop/gatling-charts-highcharts-bundle-3.5.1/results/accesssimulation-20210314144205502/index.html
 ```
 
-テストシナリオの実行に成功していることが確認できたら、本格的にテストシナリオを作成していきます。
+テストシナリオの実行に成功していることが確認できたら、複数ユーザ認証した情報を元に行うテストシナリオを書いていきます。
 
 ## 複数ユーザ認証を行うテストシナリオを実装する
 
-複数ユーザ認証するテストシナリオを実装していきます。PlayFab で複数ユーザの認証情報を元に CloudFunction の負荷テストを行うことを想定しています。[^1] テストシナリオを作成するにあたり、`./user-files/simulations/` フォルダに新たに `playfab.com` フォルダを作成して、その中にファイルを生成します。
+複数ユーザ認証するテストシナリオを実装していきます。PlayFab で複数ユーザの認証情報を元に CloudFunction の負荷テストを行うことを想定しています。[^1] テストシナリオを作成するにあたり、`./user-files/simulations/` フォルダに新たに `playfab.com` フォルダを作成して、その中に `TestCloudFunctionSimulation.scala` ファイルを生成します。
 
 [^1]: コードの `setUp` でシナリオを複数指定する箇所についてですが、より良いやり方があれば是非ご教授いただけますと幸いです...
 
