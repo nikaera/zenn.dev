@@ -32,7 +32,7 @@ published: true
 
 [Gatling のトップページ](https://gatling.io/open-source/) に遷移して、ページを `2 Ways to use Gatling` の項目までスクロールした後、ダウンロードボタンをクリックします。
 
-![スクリーンショット 2021-03-14 21.57.35.png](https://i.gyazo.com/9d98802bee6499a2fcc4432fa27553d2.png)
+![スクリーンショット 2021-03-14 21.57.35.png](https://i.gyazo.com/0bbfb36fa7ea0704d4ebc50682f836ef.png)
 **`DOWNLOAD GATLING'S BUNDLE` にある `DOWNLOAD NOW` ボタンをクリックする**
 
 ファイルダウンロード後はダウンロードした zip ファイルを適当なフォルダに展開して配置します。
@@ -392,7 +392,7 @@ class TestCloudFunctionSimulation extends Simulation {
 
 ::: message info
 
-`playfabUsers.foreach` で値を指定するのではなく [CSV でテストに与えるフィードデータを定義する](http://www.ajisaba.net/develop/gatling/test_case_csv_feeder.html) する方法もあります。認証部分も含めてテストシナリオを書きたい場合にも便利に利用できます。またアカウント情報を CSV ファイルに定義できるようにしておくと、テストユーザの情報を新規追加したい場合で管理が楽になります。
+`playfabUsers.foreach` で値を指定するのではなく [CSV でテストに与えるフィードデータを定義する](http://www.ajisaba.net/develop/gatling/test_case_csv_feeder.html) する方法もあります。認証部分も含めてテストシナリオを書きたい場合にも便利に利用できます。またアカウント情報を CSV ファイルに定義しておくと、テストユーザの情報を新規追加したい場合で管理が楽になります。
 
 :::
 
