@@ -1,4 +1,5 @@
 ---
+devto_article_id: 640766
 title: "MediaPackage 用の CloudFront ディストリビューションを AWS SDK で作成する"
 emoji: "🎥"
 type: "tech" # tech: 技術記事 / idea: アイデア

@@ -1,4 +1,5 @@
 ---
+devto_article_id: 640771
 title: "Serverless のプラグインを TypeScript で作成する方法"
 emoji: "🔨"
 type: "tech"

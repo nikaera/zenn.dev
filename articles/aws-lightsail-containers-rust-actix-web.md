@@ -1,4 +1,5 @@
 ---
+devto_article_id: 640765
 title: "AWS Lightsail Containers に Actix web をデプロイする"
 emoji: "⛵"
 type: "tech" # tech: 技術記事 / idea: アイデア

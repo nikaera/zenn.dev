@@ -1,4 +1,5 @@
 ---
+devto_article_id: 640770
 title: "Hugo で React + TypeScript を利用してサクッとウェブサイトに RSS リーダーを追加する"
 emoji: "⛳"
 type: "tech" # tech: 技術記事 / idea: アイデア

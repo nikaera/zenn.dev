@@ -1,4 +1,5 @@
 ---
+devto_article_id: 640767
 title: "Actix web で HttpOnly な Cookie を設定する"
 emoji: "🍪"
 type: "tech" # tech: 技術記事 / idea: アイデア

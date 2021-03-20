@@ -1,4 +1,5 @@
 ---
+devto_article_id: 640773
 title: "Vercel の定期デプロイを GitHub Actions で実現する"
 emoji: "🎉"
 type: "tech" # tech: 技術記事 / idea: アイデア

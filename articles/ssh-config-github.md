@@ -1,4 +1,5 @@
 ---
+devto_article_id: 640772
 title: "GitHub 接続時の ~/.ssh/config の書き方"
 emoji: "🔥"
 type: "tech" # tech: 技術記事 / idea: アイデア

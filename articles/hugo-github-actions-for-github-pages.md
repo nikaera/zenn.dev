@@ -1,4 +1,5 @@
 ---
+devto_article_id: 640769
 title: "Hugo + GitHub Pages + GitHub Actions で独自ドメインのウェブサイトを構築する"
 emoji: "😊"
 type: "tech" # tech: 技術記事 / idea: アイデア
