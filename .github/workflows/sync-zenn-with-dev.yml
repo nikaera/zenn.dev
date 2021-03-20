@@ -23,7 +23,7 @@ jobs:
             echo "${changed_file}" >> added_modified.txt
           done
       - name: dev.to action step
-        uses: nikaera/sync-zenn-with-dev-action
+        uses: nikaera/sync-zenn-with-dev-action@v1
         id: dev-to
         with:
           api_key: ${{ secrets.api_key }}
