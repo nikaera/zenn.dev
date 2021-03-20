@@ -1,4 +1,4 @@
-name: 'Sync Zenn with DEV'
+name: "Sync Zenn with DEV"
 on:
   push:
     branches:
@@ -24,7 +24,7 @@ jobs:
         id: dev-to
         with:
           api_key: ${{ secrets.api_key }}
-          # added_modified_filepath: ./added_modified.txt
+          added_modified_filepath: ./added_modified.txt
       - name: write article id of DEV to articles of Zenn.
         run: |
           git config user.name github-actions
