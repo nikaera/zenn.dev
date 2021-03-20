@@ -11,9 +11,6 @@ jobs:
     steps:
       - name: setup node project
         uses: actions/checkout@v2
-      - run: |
-          npm install
-          npm run all
       - name: get modified files
         id: files
         uses: jitterbit/get-changed-files@v1
