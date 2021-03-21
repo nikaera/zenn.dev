@@ -1,11 +1,5 @@
 name: "Sync Zenn with DEV"
 on:
-  workflow_dispatch:
-    inputs:
-      update_all:
-        description: Whether to sync all articles
-        default: false
-        required: true
   push:
     branches:
       - main
@@ -25,7 +19,6 @@ jobs:
           for changed_file in ${{ steps.files.outputs.added_modified }}; do
             echo "${changed_file}" >> added_modified.txt
           done
-        if: github.event.inputs.update_all == 'false'
       - name: dev.to action step
         uses: nikaera/sync-zenn-with-dev-action@v1
         id: dev-to
