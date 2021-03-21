@@ -20,4 +20,4 @@ DEV には [カノニカル URL](https://dev.to/michaelburrows/comment/125j0) �
 
 # TypeScript で GitHub Action を作る
 
-GitHub 公式が TypeScript で GitHub Action を作るための [テンプレートプロジェクト](https://github.com/actions/typescript-action) を用意してくれています。
+GitHub 公式が TypeScript で GitHub Action を作るための [テンプレートプロジェクト](https://github.com/actions/typescript-action) を用意してくれています。今回はこのテンプレートプロジェクトを利用する形でプロジェクトを作成しました。
