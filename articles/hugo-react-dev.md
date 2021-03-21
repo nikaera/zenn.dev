@@ -1,5 +1,5 @@
 ---
-devto_article_id: 640770
+dev_article_id: 640770
 title: "Hugo で React + TypeScript を利用してサクッとウェブサイトに RSS リーダーを追加する"
 emoji: "⛳"
 type: "tech" # tech: 技術記事 / idea: アイデア
@@ -9,7 +9,7 @@ published: true
 
 ::: message info
 
-この記事は [Static Site Generator Advent Calendar 2020](https://qiita.com/advent-calendar/2020/static-site-generator) 22日目の記事です。
+この記事は [Static Site Generator Advent Calendar 2020](https://qiita.com/advent-calendar/2020/static-site-generator) 22 日目の記事です。
 
 :::
 
@@ -20,7 +20,7 @@ Hugo のウェブサイトに組み込む RSS リーダーを TypeScript で開�
 また、NPM パッケージも利用できるため、普段のウェブ開発と同様の流れで開発ができ、各種ライブラリを用いた開発も非常に楽でした。
 今回は Hugo で JavaScript 開発する方法を RSS リーダーの開発を例に上げ、そこで得た知見についても交える形で記事として残しておくことにしました。
 
-**ちなみに本記事内容は Hugo で JavaScript 開発する方法に焦点を絞ったものなのですが、ウェブサイトに RSS リーダーを組み込むことに焦点を絞って見たい方は [`RSS リーダーを Hugo の Data Templates で実装する`](#(%E4%BD%99%E8%AB%87)-rss-%E3%83%AA%E3%83%BC%E3%83%80%E3%83%BC%E3%82%92-hugo-%E3%81%AE-data-templates-%E3%81%A7%E5%AE%9F%E8%A3%85%E3%81%99%E3%82%8B) から見ていただくことをオススメします。**
+**ちなみに本記事内容は Hugo で JavaScript 開発する方法に焦点を絞ったものなのですが、ウェブサイトに RSS リーダーを組み込むことに焦点を絞って見たい方は [`RSS リーダーを Hugo の Data Templates で実装する`](<#(%E4%BD%99%E8%AB%87)-rss-%E3%83%AA%E3%83%BC%E3%83%80%E3%83%BC%E3%82%92-hugo-%E3%81%AE-data-templates-%E3%81%A7%E5%AE%9F%E8%A3%85%E3%81%99%E3%82%8B>) から見ていただくことをオススメします。**
 
 # Hugo で JavaScript (React + TypeScript) の開発環境を整える
 
@@ -65,14 +65,18 @@ ReactDOM.render(
 <div id="react"></div>
 
 <!-- TSX を ESBuild でビルドする際の Hugo のオプションを指定する -->
-{{ $options := dict "targetPath" "js/app.js" "minify" true "defines" (dict "process.env.NODE_ENV" "\"development\"") }}
+{{ $options := dict "targetPath" "js/app.js" "minify" true "defines" (dict
+"process.env.NODE_ENV" "\"development\"") }}
 
 <!-- TSX のビルドを Hugo のオプションで指定した内容で実行する -->
 {{ $js := resources.Get . | js.Build $options }}
 
 <!-- 一応 SRI を有効化した状態でビルドした JS を読み込む -->
 {{ $secureJS := $js | resources.Fingerprint "sha512" }}
-<script src="{{ $secureJS.Permalink }}" integrity="{{ $secureJS.Data.Integrity }}"></script>
+<script
+  src="{{ $secureJS.Permalink }}"
+  integrity="{{ $secureJS.Data.Integrity }}"
+></script>
 
 {{ end }}
 
@@ -196,7 +200,7 @@ try {
 
 準備が整ったので、早速 RSS リーダーを作成していきます。
 
-下記は Hugo のテーマの 1つである [hugo-PaperMod](https://themes.gohugo.io/hugo-papermod/) の `archives` テンプレートを利用してページに埋め込むことを想定した RSS リーダーのコードです。
+下記は Hugo のテーマの 1 つである [hugo-PaperMod](https://themes.gohugo.io/hugo-papermod/) の `archives` テンプレートを利用してページに埋め込むことを想定した RSS リーダーのコードです。
 
 ```typescript:assets/js/Rss.tsx
 import React, { useMemo, useState } from 'react'
@@ -428,47 +432,71 @@ Hugo の Data Template を用いると `data` フォルダ内に配置した `js
 -->
 
 <div class="archive-year">
-    <h2 class="archive-year-header">
-        Tech 🦾
-    </h2>
-    <div class="archive-month">
-        <!-- data/Zenn.json の内容を読み込む -->
-        {{ $Zenn := $.Site.Data.Zenn }}
-        <h3 class="archive-month-header">
-            <a href="{{ $Zenn.profile_url }}" target="_blank" rel="noopener noreferrer">Zenn</a> - <a
-                href="{{ $Zenn.rss_url }}" target="_blank" rel="noopener noreferrer">RSS</a>
-        </h3>
-        <div class="archive-posts">
-        <!-- 配列で格納されている記事情報を繰り返し処理で取得する -->
-            {{- range $Zenn.items }}
-            <div class="archive-entry" key="{{ .url }}">
-                <h3 class="archive-entry-title">{{ .title }}</h3>
-                <div class="archive-meta">{{ .date }} - {{ .content }}</div>
-                <a class="entry-link" aria-label="{{ .content }}" href="{{ .url }}" target=" _blank"
-                    rel="noopener noreferrer"></a>
-            </div>
-            {{- end }}
-        </div>
+  <h2 class="archive-year-header">Tech 🦾</h2>
+  <div class="archive-month">
+    <!-- data/Zenn.json の内容を読み込む -->
+    {{ $Zenn := $.Site.Data.Zenn }}
+    <h3 class="archive-month-header">
+      <a
+        href="{{ $Zenn.profile_url }}"
+        target="_blank"
+        rel="noopener noreferrer"
+        >Zenn</a
+      >
+      -
+      <a href="{{ $Zenn.rss_url }}" target="_blank" rel="noopener noreferrer"
+        >RSS</a
+      >
+    </h3>
+    <div class="archive-posts">
+      <!-- 配列で格納されている記事情報を繰り返し処理で取得する -->
+      {{- range $Zenn.items }}
+      <div class="archive-entry" key="{{ .url }}">
+        <h3 class="archive-entry-title">{{ .title }}</h3>
+        <div class="archive-meta">{{ .date }} - {{ .content }}</div>
+        <a
+          class="entry-link"
+          aria-label="{{ .content }}"
+          href="{{ .url }}"
+          target=" _blank"
+          rel="noopener noreferrer"
+        ></a>
+      </div>
+      {{- end }}
     </div>
-    <div class="archive-month">
-        <!-- data/Qiita.json の内容を読み込む -->
-        {{ $Qiita := $.Site.Data.Qiita }}
-        <h3 class="archive-month-header">
-            <a href="{{ $Qiita.profile_url }}" target="_blank" rel="noopener noreferrer">Qiita</a> - <a
-                href="{{ $Qiita.rss_url }}" target="_blank" rel="noopener noreferrer">RSS</a>
-        </h3>
-        <div class="archive-posts">
-        <!-- 配列で格納されている記事情報を繰り返し処理で取得する -->
-            {{- range $Qiita.items }}
-            <div class="archive-entry" key="{{ .url }}">
-                <h3 class="archive-entry-title">{{ .title }}</h3>
-                <div class="archive-meta">{{ .date }} - {{ .content }}</div>
-                <a class="entry-link" aria-label="{{ .content }}" href="{{ .url }}" target=" _blank"
-                    rel="noopener noreferrer"></a>
-            </div>
-            {{- end }}
-        </div>
+  </div>
+  <div class="archive-month">
+    <!-- data/Qiita.json の内容を読み込む -->
+    {{ $Qiita := $.Site.Data.Qiita }}
+    <h3 class="archive-month-header">
+      <a
+        href="{{ $Qiita.profile_url }}"
+        target="_blank"
+        rel="noopener noreferrer"
+        >Qiita</a
+      >
+      -
+      <a href="{{ $Qiita.rss_url }}" target="_blank" rel="noopener noreferrer"
+        >RSS</a
+      >
+    </h3>
+    <div class="archive-posts">
+      <!-- 配列で格納されている記事情報を繰り返し処理で取得する -->
+      {{- range $Qiita.items }}
+      <div class="archive-entry" key="{{ .url }}">
+        <h3 class="archive-entry-title">{{ .title }}</h3>
+        <div class="archive-meta">{{ .date }} - {{ .content }}</div>
+        <a
+          class="entry-link"
+          aria-label="{{ .content }}"
+          href="{{ .url }}"
+          target=" _blank"
+          rel="noopener noreferrer"
+        ></a>
+      </div>
+      {{- end }}
     </div>
+  </div>
 </div>
 
 <!-- ... -->

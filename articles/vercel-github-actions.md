@@ -1,5 +1,5 @@
 ---
-devto_article_id: 640773
+dev_article_id: 640773
 title: "Vercel の定期デプロイを GitHub Actions で実現する"
 emoji: "🎉"
 type: "tech" # tech: 技術記事 / idea: アイデア
@@ -9,7 +9,7 @@ published: true
 
 # はじめに
 
-最近 [catnose99](https://zenn.dev/catnose99) さんの [チーム個々人のテックブログをRSSで集約するサイトを作った（Next.js）](https://zenn.dev/catnose99/articles/cb72a73368a547756862) を利用させていただく形で [会社のテックブログ](https://tech.kadinche.com/) を構築しました。
+最近 [catnose99](https://zenn.dev/catnose99) さんの [チーム個々人のテックブログを RSS で集約するサイトを作った（Next.js）](https://zenn.dev/catnose99/articles/cb72a73368a547756862) を利用させていただく形で [会社のテックブログ](https://tech.kadinche.com/) を構築しました。
 
 [Team Blog Hub](https://github.com/catnose99/team-blog-hub) が [Next.js](https://nextjs.org/) で開発されているので、デプロイ先は [Vercel](https://vercel.com/) に決めました。その際に記事を自動的に更新するために、[GitHub Actions](https://github.co.jp/features/actions) で定期的にビルドを回すようにしました。また、独自ドメインの設定も行いました。
 
@@ -17,16 +17,16 @@ published: true
 
 なお、**記事は下記の前提で書いておりますのでご注意くださいませ。**
 
-* Vercel でサインアップ済み
-  * サインアップ済みでない方は[こちら](https://vercel.com/signup)からサインアップ可能です
-* Vercel でプロジェクト作成済み
-  * プロジェクト未作成の方は[こちら](https://vercel.com/docs/platform/projects)から作成可能です
-* [Vercel の GitHub 連携](https://vercel.com/docs/git#deploying-a-git-repository)でプロジェクトへのリポジトリの紐付け済み
+- Vercel でサインアップ済み
+  - サインアップ済みでない方は[こちら](https://vercel.com/signup)からサインアップ可能です
+- Vercel でプロジェクト作成済み
+  - プロジェクト未作成の方は[こちら](https://vercel.com/docs/platform/projects)から作成可能です
+- [Vercel の GitHub 連携](https://vercel.com/docs/git#deploying-a-git-repository)でプロジェクトへのリポジトリの紐付け済み
 
 # 動作環境
 
-* Node.js v15.6.0
-* Vercel CLI 21.1.0
+- Node.js v15.6.0
+- Vercel CLI 21.1.0
 
 # GitHub Actions で Vercel へデプロイする準備を行う
 
@@ -71,11 +71,11 @@ yarn global add vercel
 
 GitHub リポジトリの Secrets に `.vercel/project.json` の内容を登録します。今回は `ORG_ID` `PROJECT_ID` `VERCEL_TOKEN` を Secrets に登録します。
 
-| キー | 値 |
-| ---- | ---- |
-| ORG_ID | `.vercel/project.json` の `orgId` |
-| PROJECT_ID | `.vercel/project.json` の `projectId` |
-| VERCEL_TOKEN | Vercel で発行したトークン |
+| キー         | 値                                    |
+| ------------ | ------------------------------------- |
+| ORG_ID       | `.vercel/project.json` の `orgId`     |
+| PROJECT_ID   | `.vercel/project.json` の `projectId` |
+| VERCEL_TOKEN | Vercel で発行したトークン             |
 
 ![スクリーンショット 2021-01-27 5.23.06.png](https://i.gyazo.com/f630e51d4c02f1ec0362712ef2cd630c.png)
 **GitHub Actions 経由で Vercel へデプロイするのに必要な値を Secrets に登録しておく**
@@ -121,7 +121,7 @@ jobs:
           vercel-token: ${{ secrets.VERCEL_TOKEN }} # Required
           vercel-args: '--prod' # Optional
           vercel-org-id: ${{ secrets.ORG_ID}}  #Required
-          vercel-project-id: ${{ secrets.PROJECT_ID}} #Required 
+          vercel-project-id: ${{ secrets.PROJECT_ID}} #Required
           working-directory: ./
 
 ```
@@ -165,12 +165,12 @@ Custom Domains の状態が `Valid Configuration` になり次第、設定した
 
 # おわりに
 
-[Team Blog Hub](https://github.com/catnose99/team-blog-hub) を用いることで、簡単にカッコいいデザインで会社のテックブログを構築できました。OSS として公開してくださっている [catnose](https://zenn.dev/catnose99) さんには本当に感謝です🙏🏻
+[Team Blog Hub](https://github.com/catnose99/team-blog-hub) を用いることで、簡単にカッコいいデザインで会社のテックブログを構築できました。OSS として公開してくださっている [catnose](https://zenn.dev/catnose99) さんには本当に感謝です 🙏🏻
 
-無理なく継続更新され続ける自社テックブログとして、ありがたく Team Blog Hug を活用させていただきつつ、PR チャンスがあれば積極的に狙っていきたいと考えています🔫
+無理なく継続更新され続ける自社テックブログとして、ありがたく Team Blog Hug を活用させていただきつつ、PR チャンスがあれば積極的に狙っていきたいと考えています 🔫
 
 # 参考リンク
 
-* [catnose99/team-blog-hub: RSS based blog starter kit for teams](https://github.com/catnose99/team-blog-hub)
-* [Introduction to Vercel - Vercel Documentation](https://vercel.com/docs)
-* [Vercel Action · Actions · GitHub Marketplace](https://github.com/marketplace/actions/vercel-action)
+- [catnose99/team-blog-hub: RSS based blog starter kit for teams](https://github.com/catnose99/team-blog-hub)
+- [Introduction to Vercel - Vercel Documentation](https://vercel.com/docs)
+- [Vercel Action · Actions · GitHub Marketplace](https://github.com/marketplace/actions/vercel-action)

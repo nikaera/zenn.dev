@@ -1,5 +1,5 @@
 ---
-devto_article_id: 640769
+dev_article_id: 640769
 title: "Hugo + GitHub Pages + GitHub Actions で独自ドメインのウェブサイトを構築する"
 emoji: "😊"
 type: "tech" # tech: 技術記事 / idea: アイデア
@@ -9,7 +9,7 @@ published: true
 
 ::: message info
 
-この記事は [Static Site Generator Advent Calendar 2020](https://qiita.com/advent-calendar/2020/static-site-generator) 10日目の記事です。
+この記事は [Static Site Generator Advent Calendar 2020](https://qiita.com/advent-calendar/2020/static-site-generator) 10 日目の記事です。
 
 :::
 
@@ -196,12 +196,12 @@ jobs:
 
 `- name: Deploy` の項目で設定した各種パラメータは下記になります。
 
-| キー | 説明 |
-| ------- | ------- |
-| deploy_key | デプロイ時に使用する秘密鍵 |
-| external_repository | デプロイ先のリモートリポジトリ |
-| publish_branch | デプロイ先のリモートリポジトリのブランチ |
-| cname | 設定するカスタムドメイン名 |
+| キー                | 説明                                     |
+| ------------------- | ---------------------------------------- |
+| deploy_key          | デプロイ時に使用する秘密鍵               |
+| external_repository | デプロイ先のリモートリポジトリ           |
+| publish_branch      | デプロイ先のリモートリポジトリのブランチ |
+| cname               | 設定するカスタムドメイン名               |
 
 `deploy_key` にはシークレットに登録した秘密鍵を設定します。`external_repository` には Hugo をビルドした際のデプロイ先リポジトリを `<ユーザ名>/<リポジトリ名>` のフォーマットで指定します。`publish_branch` はデプロイ先として使用するブランチ名になります。`cname` には自分が設定したいドメイン名を指定します。`cname` の [詳細](https://docs.github.com/ja/free-pro-team@latest/github/working-with-github-pages/managing-a-custom-domain-for-your-github-pages-site) はこちらからご確認いただけます。
 
@@ -218,7 +218,6 @@ GitHub Pages にカスタムドメインを利用する際は、該当するド�
 :::
 
 設定作業はこれで完了です。あとは実際に Hugo プロジェクトを更新後、`hugo-blog` リポジトリに push することでビルドからデプロイまで GitHub Actions で行われるようになったかを確認していきます。
-
 
 ## Hugo プロジェクトの更新時に自動でデプロイが行われるか確認する
 

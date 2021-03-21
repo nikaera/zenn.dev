@@ -1,5 +1,5 @@
 ---
-devto_article_id: 640768
+dev_article_id: 640768
 title: "Gatling で複数ユーザ認証した情報を元に負荷テストする"
 emoji: "🔫"
 type: "tech" # tech: 技術記事 / idea: アイデア

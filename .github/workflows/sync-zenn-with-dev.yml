@@ -25,7 +25,7 @@ jobs:
         with:
           api_key: ${{ secrets.api_key }}
           username: nikaera
-          # added_modified_filepath: ./added_modified.txt
+          added_modified_filepath: ./added_modified.txt
       - name: write article id of DEV to articles of Zenn.
         run: |
           git config user.name github-actions

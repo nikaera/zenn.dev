@@ -1,5 +1,5 @@
 ---
-devto_article_id: 640771
+dev_article_id: 640771
 title: "Serverless のプラグインを TypeScript で作成する方法"
 emoji: "🔨"
 type: "tech"
@@ -45,7 +45,7 @@ tree -I node_modules -L 2 ./
 └── tsconfig.json
 ```
 
-基本的には [TypeScriptでServerless FrameworkのPluginを書いてみる | Developers.IO](https://dev.classmethod.jp/articles/create-serverless-framework-plugin-by-typescript/) の手順をなぞっていくだけで環境構築自体は可能です。そこで、ここでは自分なりに工夫した箇所について記載していきます。
+基本的には [TypeScript で Serverless Framework の Plugin を書いてみる | Developers.IO](https://dev.classmethod.jp/articles/create-serverless-framework-plugin-by-typescript/) の手順をなぞっていくだけで環境構築自体は可能です。そこで、ここでは自分なりに工夫した箇所について記載していきます。
 
 まずは、開発に必要なパッケージを下記コマンドでまとめてインストールします。
 
@@ -344,9 +344,9 @@ cd example && npm start
 > sls package
 
 Serverless: Configuration warning at 'service': unrecognized property 'publish'
-Serverless:  
+Serverless:
 Serverless: Learn more about configuration validation here: http://slss.io/configuration-validation
-Serverless:  
+Serverless:
 # src/index.ts 内の this.serverless.cli.log の出力内容
 # 各種値が正常にセットされていることが確認出来る
 Serverless: serverless-typescript values: {"stage":"dev","region":"ap-northeast-1","accountId":"XXXXXXXXXX","variables":{"value1":"value1","value2":0,"value3":true,"profile":"custom_profile"}}
@@ -472,6 +472,6 @@ Serverless: serverless-typescript profile: {"expired":false,"expireTime":null,"r
 
 # 参考リンク
 
-- [TypeScriptでServerless FrameworkのPluginを書いてみる | Developers.IO](https://dev.classmethod.jp/articles/create-serverless-framework-plugin-by-typescript/)
-- [typescript導入したprivateなnpmパッケージの作り方 - 30歳SIerからWEBエンジニアで奮闘](https://karuta-kayituka.hatenablog.com/entry/2020/04/05/124531)
+- [TypeScript で Serverless Framework の Plugin を書いてみる | Developers.IO](https://dev.classmethod.jp/articles/create-serverless-framework-plugin-by-typescript/)
+- [typescript 導入した private な npm パッケージの作り方 - 30 歳 SIer から WEB エンジニアで奮闘](https://karuta-kayituka.hatenablog.com/entry/2020/04/05/124531)
 - [How To Write Your First Plugin For The Serverless Framework - Part 1](https://www.serverless.com/blog/writing-serverless-plugins)
