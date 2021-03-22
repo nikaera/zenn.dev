@@ -91,7 +91,7 @@ jobs:
    (後のジョブで `dev_article_id` の含まれた記事をコミットしたいため)
 1. ワークフローで同期された記事情報は Outouts の `articles` に設定する
 
-Inputs と Outputs の内容一覧については下記になります。Inputs 及び Outputs の詳細は[公式サイトの説明](https://docs.github.com/ja/actions/creating-actions/metadata-syntax-for-github-actions#)をご参照ください。
+Inputs と Outputs の内容一覧については下記になります。
 
 **Inputs**
 
@@ -108,6 +108,8 @@ Inputs と Outputs の内容一覧については下記になります。Inputs 
 | :------------------ | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | articles            | 同期された DEV の記事のタイトル及び URL が格納された配列                                                                                                                                                                                                                             |
 | newly-sync-articles | DEV で新たに新規作成された Zenn 記事のファイルパスが格納された配列。**[実際のワークフローファイルの該当する記述](https://github.com/nikaera/sync-zenn-with-dev-action/blob/main/.github/workflows/test.yml#L31-L38)のように、必ずコミットに含めるようにする必要がある (理由は後述)** |
+
+Inputs 及び Outputs については[公式サイトの説明](https://docs.github.com/ja/actions/creating-actions/metadata-syntax-for-github-actions#)をご参照ください。
 
 ## Zenn の記事を DEV に同期するための仕組み
 
