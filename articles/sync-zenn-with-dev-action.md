@@ -4,19 +4,19 @@ title: "Zenn の記事を DEV に自動的に同期させる GitHub Action 作�
 emoji: "📌"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["typescript", "githubactions", "forem"]
-published: false
+published: true
 ---
 
 # はじめに
 
-[DEV](https://dev.to/) のアカウントを作成していたものの、今まで全く有効活用出来ていませんでした。
+去年 [DEV](https://dev.to/) のアカウントを作成したものの、今まで全く有効活用出来ていませんでした。
 
 DEV には [カノニカル URL](https://dev.to/michaelburrows/comment/125j0) を設定出来るので、常々 Zenn の記事を投稿する際にクロスポストしたいなと考えておりました。そこで、**Zenn に記事を投稿したら、自動的に DEV にも記事を投稿 & 同期する GitHub Action を作ってみました。**
 [sync-zenn-with-dev-action](https://github.com/nikaera/sync-zenn-with-dev-action)
 
 今回初めて GitHub Action を自作したのですが、その中で得た知見を残す形で記事を書くことにしました。また、GitHub Action は TypeScript で作成しました。
 
-# 今回作成した GitHub Action の概要
+# 開発した GitHub Action の概要
 
 まずはザッとどのような GitHub Action を作成したのか、概要について説明いたします。
 
@@ -91,7 +91,7 @@ jobs:
    (後のジョブで `dev_article_id` の含まれた記事をコミットしたいため)
 1. ワークフローで同期された記事情報は Outouts の `articles` に設定する
 
-Inputs と Outputs の内容一覧については下記になります。
+Inputs と Outputs の内容一覧については下記になります。Inputs 及び Outputs の詳細は[公式サイトの説明](https://docs.github.com/ja/actions/creating-actions/metadata-syntax-for-github-actions#)をご参照ください。
 
 **Inputs**
 
@@ -109,19 +109,19 @@ Inputs と Outputs の内容一覧については下記になります。
 | articles            | 同期された DEV の記事のタイトル及び URL が格納された配列                                                                                                                                                                                                                             |
 | newly-sync-articles | DEV で新たに新規作成された Zenn 記事のファイルパスが格納された配列。**[実際のワークフローファイルの該当する記述](https://github.com/nikaera/sync-zenn-with-dev-action/blob/main/.github/workflows/test.yml#L31-L38)のように、必ずコミットに含めるようにする必要がある (理由は後述)** |
 
-ザッと本記事で紹介する GitHub Action の説明は上記の通りです。
-
 ## Zenn の記事を DEV に同期するための仕組み
 
-Zenn の記事を新規で DEV に同期する際は、DEV に記事を新規作成する必要があります。**その際に Zenn の記事と DEV の記事を紐付けるための何らかの仕組みが必要となります。そうしないと、今後 Zenn の記事内容を DEV のどの記事に同期させるようにすればよいかが不明なためです。**
+Zenn の記事を新規で DEV に同期する際は、DEV に記事を新規作成する必要があります。**その際に Zenn の記事と DEV の記事を紐付けるための何らかの仕組みが必要となります。そうしないと、今後 Zenn の記事内容を更新した際に、DEV のどの記事に内容を同期させればよいかが不明なためです。**
 
-そこで記事を同期するための仕組みとして、**`dev_article_id` というフィールドを Zenn のマークダウンヘッダに追記することで DEV の同期すべき記事との紐付けを行うことにしました。**`dev_article_id` には [DEV の記事作成 API](https://docs.forem.com/api/#operation/createArticle) 実行時の返り値である `id` を設定します。
+そこで、記事を同期するための仕組みとして、**`dev_article_id` というフィールドを Zenn のマークダウンヘッダに追記することで DEV の同期すべき記事との紐付けを行うことにしました。**`dev_article_id` には [DEV の記事作成 API](https://docs.forem.com/api/#operation/createArticle) 実行時の返り値である `id` を設定します。
 
-一度 `dev_article_id` を紐付けてしまえば、次回以降に記事の同期を行う際は [DEV の記事更新 API](https://docs.forem.com/api/#operation/updateArticle) を利用することが可能になります。
+一度 `id` を `dev_article_id` として Zenn の記事に紐付けてしまえば、次回以降に記事の同期を行う際は [DEV の記事更新 API](https://docs.forem.com/api/#operation/updateArticle) を利用できます。
 
-また、**Outputs の `newly-sync-articles` には新規で作成された DEV 記事の `id` が追記された Zenn 記事のファイルパスが格納されています。そのため、`nikaera/sync-zenn-with-dev-action@v1` 実行後は、下記のように `steps.dev-to.outputs.newly-sync-articles` 内に格納されたファイル群をコミットに反映させる必要があります。**
+また、**Outputs の `newly-sync-articles` には新規で作成された DEV 記事の `id` である `dev_article_id` が追記された Zenn 記事のファイルパスが格納されています。そのため、`nikaera/sync-zenn-with-dev-action@v1` 実行後は、下記のように `steps.dev-to.outputs.newly-sync-articles` 内に格納されたファイル群をコミットに反映させる必要があります。**
 
 ```yml
+# `nikaera/sync-zenn-with-dev-action@v1` 実行後に必ず定義すべきジョブ
+# DEV に新規に作成した記事がなければ実行しない (if: steps.dev-to.outputs.newly-sync-articles)
 - name: write article id of DEV to articles of Zenn.
     run: |
         git config user.name github-actions
@@ -129,17 +129,18 @@ Zenn の記事を新規で DEV に同期する際は、DEV に記事を新規作
         git add ${{ steps.dev-to.outputs.newly-sync-articles }}
         git commit -m "sync: Zenn with DEV [skip ci]"
         git push
+    if: steps.dev-to.outputs.newly-sync-articles
 ```
 
 ::: message alert
 
-`newly-sync-articles` に格納された `dev_article_id` が追記された Zenn 記事は随時コミットに反映しないと、**Zenn の全ての記事が同期毎 DEV に新規作成され続けるという挙動を引き起こしてしまうので、ご注意ください**
+上記のジョブで `newly-sync-articles` に格納された `dev_article_id` が追記された Zenn 記事は随時コミットに反映しないと、**Zenn の全ての記事が同期毎 DEV に新規作成され続けるという不具合を引き起こしてしまうので、ご注意ください**
 
 :::
 
-# GitHub Action を自作する手順
+# GitHub Action を開発する手順
 
-サクッと作りたかったため、[Docker コンテナを利用する方法](https://docs.github.com/ja/actions/creating-actions/creating-a-docker-container-action) ではなく、[JavaScript を利用する方法](https://docs.github.com/ja/actions/creating-actions/creating-a-javascript-action) で開発を進めていくことにしました。
+サクッと開発に取り組みたかったため、[Docker コンテナを利用する方法](https://docs.github.com/ja/actions/creating-actions/creating-a-docker-container-action) ではなく、[JavaScript を利用する方法](https://docs.github.com/ja/actions/creating-actions/creating-a-javascript-action) で開発を進めていくことにしました。
 
 ## TypeScript で GitHub Action を作る
 
@@ -147,7 +148,7 @@ GitHub 公式が TypeScript で GitHub Action を作るための [テンプレ�
 
 ::: message info
 
-(余談) GitHub Action では [Docker コンテナ](https://docs.github.com/ja/actions/creating-actions/creating-a-docker-container-action) を用いてワークフローが実行可能です。**そのため、実行環境は自由に設定出来ます。(Go, Python, Ruby, etc.)**
+(余談) GitHub Action では [Docker コンテナ](https://docs.github.com/ja/actions/creating-actions/creating-a-docker-container-action) を用いてワークフローを実行可能です。**そのため、実行環境は自由に設定出来ます。(Go, Python, Ruby, etc.)**
 
 :::
 
@@ -217,7 +218,7 @@ TypeScript のテンプレートプロジェクトでは、バンドルツール
 
 ::: message info
 
-(余談) 開発ツールとして Docker を利用した [`act`](https://github.com/nektos/act) というものが存在するようです。ローカル環境で検証する際は [既知の問題](https://github.com/nektos/act#known-issues) に対応する必要がありそうですが、GitHub Action の開発で非常に有効活用できそうで気になっております。
+(余談) GitHub Action の開発ツールとして Docker を利用した [`act`](https://github.com/nektos/act) というものが存在するようです。ローカル環境で検証する際は [既知の問題](https://github.com/nektos/act#known-issues) に対応する必要がありそうですが、GitHub Action の開発で非常に有効活用できそうで気になっております。
 
 今回の開発では利用しなかったのですが、今後開発を進めていく中で利用する機会も出てきそうなので、その際は本記事内容を更新する形で知見を追記したいと考えております。
 
@@ -239,7 +240,7 @@ GitHub Action を実装する際に利用した機能を、実際のコード内
         api_key: ${{ secrets.api_key }}
 */
 core.getInput("api_key", { required: true });
-core.getInput("articles", { required: false });
+core.getInput("update_all", { required: false });
 
 /**
 下記の yml の steps.<ジョブで指定した id>.outputs で参照可能な値をセットすることが可能。
@@ -283,7 +284,7 @@ core.error(JSON.stringify(error));
 
 ## Zenn の全ての記事を DEV に同期するためのワークフロー
 
-まず今回の GitHub Action では DEV の API キーを利用する必要があるため、**事前にシークレットへ `API_KEY` という名称で値を登録しておきます。**[公式サイトの手順](https://docs.github.com/ja/actions/reference/encrypted-secrets#creating-encrypted-secrets-for-a-repository) に従い シークレットの登録が完了したら、該当リポジトリに `.github/workflows/sync-zenn-with-dev-all.yml` というワークフローファイルを作成します。
+本記事の GitHub Action では DEV の API キーを使用するため、**事前にシークレットへ `API_KEY` という名称で値を登録しておきます。**[公式サイトの手順](https://docs.github.com/ja/actions/reference/encrypted-secrets#creating-encrypted-secrets-for-a-repository) に従い シークレットの登録が完了したら、該当リポジトリに `.github/workflows/sync-zenn-with-dev-all.yml` というワークフローファイルを作成します。
 
 ```yml:.github/workflows/sync-zenn-with-dev-all.yml
 name: "Sync-All Zenn with DEV"
@@ -302,7 +303,9 @@ jobs:
         id: dev-to
         with:
           api_key: ${{ secrets.api_key }}
-          username: nikaera
+          # Zenn の自分のアカウント名を指定すると
+          # DEV 記事のカノニカル URL に Zenn 記事の URL を指定できる
+          # username: nikaera
           update_all: true
       - name: write article id of DEV to articles of Zenn.
         run: |
@@ -366,7 +369,9 @@ jobs:
         id: dev-to
         with:
           api_key: ${{ secrets.api_key }}
-          username: nikaera
+          # Zenn の自分のアカウント名を指定すると
+          # DEV 記事のカノニカル URL に Zenn 記事の URL を指定できる
+          # username: nikaera
           added_modified_filepath: ./added_modified.txt
           update_all: false
       - name: write article id of DEV to articles of Zenn.
@@ -381,7 +386,7 @@ jobs:
         run: echo "${{ steps.dev-to.outputs.articles }}"
 ```
 
-上記ワークフローファイルの作成が完了したら、早速動作確認のために、**まさに今執筆中の本記事をリポジトリに push してみます。**
+上記ワークフローファイルの作成が完了したら、早速動作確認のために、**まさに今執筆中の本記事内容をリポジトリに push してみます。**
 
 ![スクリーンショット 2021-03-22 9.07.55.png](https://i.gyazo.com/36512e7874b49edc1e48f0ef88af5d89.png)
 **1. `git push` 後に該当するワークフローの実行結果を確認する**
@@ -397,7 +402,9 @@ GitHub Action の勉強のために取り組んだプロジェクトですが、
 
 DEV に Zenn の記事をクロスポストする GitHub Action を公開することで、いつもお世話になっている Zenn というプラットフォームを海外の方に認知していただける機会を創出できたのかもと考えたらテンションが上がってきました。
 
-それはさておき、[Qiita](https://qiita.com/) や [Crieit](https://crieit.net) に自動投稿する GitHub Action を開発する際には、恐らく本記事で紹介した GitHub Action のコードが参考になるはずです。
+それはさておき、Zenn の記事を他でも有効活用するための GitHub Action を開発する際には、恐らく本記事で紹介した GitHub Action のコードが参考になるはずです。
+
+また、[GitHub Action の Marketplace](https://docs.github.com/ja/actions/creating-actions/publishing-actions-in-github-marketplace) というものが用意されているようなので、開発がある程度完了次第、こちらに申請するのも試してみたいと考えております。
 
 # 参考リンク
 
