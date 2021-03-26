@@ -11,6 +11,8 @@ published: true
 
 最近 [catnose99](https://zenn.dev/catnose99) さんの [チーム個々人のテックブログを RSS で集約するサイトを作った（Next.js）](https://zenn.dev/catnose99/articles/cb72a73368a547756862) を利用させていただく形で [会社のテックブログ](https://tech.kadinche.com/) を構築しました。
 
+https://tech.kadinche.com/
+
 [Team Blog Hub](https://github.com/catnose99/team-blog-hub) が [Next.js](https://nextjs.org/) で開発されているので、デプロイ先は [Vercel](https://vercel.com/) に決めました。その際に記事を自動的に更新するために、[GitHub Actions](https://github.co.jp/features/actions) で定期的にビルドを回すようにしました。また、独自ドメインの設定も行いました。
 
 **本記事では、Vercel プロジェクトを GitHub Actions でビルドしてデプロイするための手順についてまとめていきます。またおまけとして、Vercel での独自ドメインの設定方法、及び弊社の Team Blog Hub の運用方針についても書いていきます。**

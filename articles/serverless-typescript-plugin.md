@@ -11,7 +11,7 @@ published: true
 
 [Serverless Framework](https://www.serverless.com/) を使っていて、度々デプロイ時に手動で設定していた作業内容を自動化したいなと思い、プラグイン作成の知識習得も兼ねてライブラリを作成し [NPM](https://www.npmjs.com/) で公開してみました。
 
-[serverless-amplify-auth 🔑](https://www.npmjs.com/package/serverless-amplify-auth)
+https://www.npmjs.com/package/serverless-amplify-auth
 
 今後も開発する可能性はありそうなので Serverless のプラグインを TypeScript で作成する際の手順をまとめておきました。各手順はザックリと紹介しつつ、**主にその過程でハマった点や工夫した点に重きをおいて記事を書いていきます。**
 

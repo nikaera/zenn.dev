@@ -12,7 +12,8 @@ published: true
 去年 [DEV](https://dev.to/) のアカウントを作成したものの、今まで全く有効活用出来ていませんでした。
 
 DEV には [カノニカル URL](https://dev.to/michaelburrows/comment/125j0) を設定出来るので、常々 Zenn の記事を投稿する際にクロスポストしたいなと考えておりました。そこで、**Zenn に記事を投稿したら、自動的に DEV にも記事を投稿 & 同期する GitHub Action を作ってみました。**
-[sync-zenn-with-dev-action](https://github.com/nikaera/sync-zenn-with-dev-action)
+
+https://github.com/nikaera/sync-zenn-with-dev-action
 
 今回初めて GitHub Action を自作したのですが、その中で得た知見を残す形で記事を書くことにしました。また、GitHub Action は TypeScript で作成しました。
 
