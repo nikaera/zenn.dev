@@ -1,6 +1,6 @@
 ---
 dev_article_id: 640945
-title: "Zenn の記事を DEV に自動的に同期させる GitHub Action 作ってみた"
+title: "Zenn の記事を DEV に自動的に同期させる GitHub Actions 作ってみた"
 emoji: "📌"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["typescript", "githubactions", "forem"]
@@ -11,19 +11,19 @@ published: true
 
 去年 [DEV](https://dev.to/) のアカウントを作成したものの、今まで全く有効活用出来ていませんでした。
 
-DEV には [カノニカル URL](https://dev.to/michaelburrows/comment/125j0) を設定出来るので、常々 Zenn の記事を投稿する際にクロスポストしたいなと考えておりました。そこで、**Zenn に記事を投稿したら、自動的に DEV にも記事を投稿 & 同期する GitHub Action を作ってみました。**
+DEV には [カノニカル URL](https://dev.to/michaelburrows/comment/125j0) を設定出来るので、常々 Zenn の記事を投稿する際にクロスポストしたいなと考えておりました。そこで、**Zenn に記事を投稿したら、自動的に DEV にも記事を投稿 & 同期する GitHub Actions を作ってみました。**
 
 https://github.com/nikaera/sync-zenn-with-dev-action
 
-今回初めて GitHub Action を自作したのですが、その中で得た知見を残す形で記事を書くことにしました。また、GitHub Action は TypeScript で作成しました。
+今回初めて GitHub Actions を自作したのですが、その中で得た知見を残す形で記事を書くことにしました。また、GitHub Actions は TypeScript で作成しました。
 
-# 開発した GitHub Action の概要
+# 開発した GitHub Actions の概要
 
-まずはザッとどのような GitHub Action を作成したのか、概要について説明いたします。
+まずはザッとどのような GitHub Actions を作成したのか、概要について説明いたします。
 
-**GitHub リポジトリで管理している Zenn の記事を DEV に同期して投稿する GitHub Action を作成しました。** その際に DEV へ投稿する記事には Zenn の該当記事へのカノニカル URL も自動で設定できます。これにより DEV と Zenn へ記事をシームレスにクロスポストすることが可能となります。
+**GitHub リポジトリで管理している Zenn の記事を DEV に同期して投稿する GitHub Actions を作成しました。** その際に DEV へ投稿する記事には Zenn の該当記事へのカノニカル URL も自動で設定できます。これにより DEV と Zenn へ記事をシームレスにクロスポストすることが可能となります。
 
-今回作成した GitHub Action を利用するワークフローファイルの一例は下記となります。
+今回作成した GitHub Actions を利用するワークフローファイルの一例は下記となります。
 
 ```yml
 name: "Sync all Zenn articles to DEV"
@@ -96,12 +96,12 @@ Inputs と Outputs の内容一覧については下記になります。
 
 **Inputs**
 
-| キー                    | 説明                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | 必須 |
-| :---------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :--: |
-| api_key                 | DEV の [API Key](https://docs.forem.com/api/#section/Authentication) を設定する                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |  o   |
-| username                | Zenn の **自分のアカウント名** を設定する (DEV に同期する記事に Zenn のカノニカル URL を設定したい場合のみ)                                                                                                                                                                                                                                                                                                                                                                                                                                     |  x   |
-| added_modified_filepath | 改行区切りで指定した articles フォルダ内のファイルパスを記載した txt ファイルを指定することで、記載された記事のみを同期するようになる。**PR やコミット差分のファイルのみを取得するための GitHub Action [jitterbit/get-changed-files@v1](https://github.com/jitterbit/get-changed-files) と組み合わせることで、更新差分のあった記事のみを随時同期することも可能。[^2]** 更新差分のあった記事のみを随時同期するための[実際のワークフローファイルはこちら](https://github.com/nikaera/zenn.dev/blob/main/.github/workflows/sync-zenn-with-dev.yml) |  x   |
-| update_all              | Zenn の全ての記事をどうきするかどうかを設定する。GitHub Action 初回実行時のみ true にする使い方を想定している。デフォルトは true。**`added_modified_filepath` よりも `update_all` が優先されるため `added_modified_filepath` を設定する場合は false を設定する必要あり`**                                                                                                                                                                                                                                                                       |  x   |
+| キー                    | 説明                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | 必須 |
+| :---------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :--: |
+| api_key                 | DEV の [API Key](https://docs.forem.com/api/#section/Authentication) を設定する                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |  o   |
+| username                | Zenn の **自分のアカウント名** を設定する (DEV に同期する記事に Zenn のカノニカル URL を設定したい場合のみ)                                                                                                                                                                                                                                                                                                                                                                                                                                      |  x   |
+| added_modified_filepath | 改行区切りで指定した articles フォルダ内のファイルパスを記載した txt ファイルを指定することで、記載された記事のみを同期するようになる。**PR やコミット差分のファイルのみを取得するための GitHub Actions [jitterbit/get-changed-files@v1](https://github.com/jitterbit/get-changed-files) と組み合わせることで、更新差分のあった記事のみを随時同期することも可能。[^2]** 更新差分のあった記事のみを随時同期するための[実際のワークフローファイルはこちら](https://github.com/nikaera/zenn.dev/blob/main/.github/workflows/sync-zenn-with-dev.yml) |  x   |
+| update_all              | Zenn の全ての記事をどうきするかどうかを設定する。GitHub Actions 初回実行時のみ true にする使い方を想定している。デフォルトは true。**`added_modified_filepath` よりも `update_all` が優先されるため `added_modified_filepath` を設定する場合は false を設定する必要あり`**                                                                                                                                                                                                                                                                       |  x   |
 
 **Outputs**
 
@@ -141,41 +141,41 @@ Zenn の記事を新規で DEV に同期する際は、DEV に記事を新規作
 
 :::
 
-# GitHub Action を開発する手順
+# GitHub Actions を開発する手順
 
 サクッと開発に取り組みたかったため、[Docker コンテナを利用する方法](https://docs.github.com/ja/actions/creating-actions/creating-a-docker-container-action) ではなく、[JavaScript を利用する方法](https://docs.github.com/ja/actions/creating-actions/creating-a-javascript-action) で開発を進めていくことにしました。
 
-## TypeScript で GitHub Action を作る
+## TypeScript で GitHub Actions を作る
 
-GitHub 公式が TypeScript で GitHub Action を作るための [テンプレートプロジェクト](https://github.com/actions/typescript-action) を用意してくれています。今回はこのテンプレートプロジェクトを利用する形でプロジェクトを作成しました。
+GitHub 公式が TypeScript で GitHub Actions を作るための [テンプレートプロジェクト](https://github.com/actions/typescript-action) を用意してくれています。今回はこのテンプレートプロジェクトを利用する形でプロジェクトを作成しました。
 
 ::: message info
 
-(余談) GitHub Action では [Docker コンテナ](https://docs.github.com/ja/actions/creating-actions/creating-a-docker-container-action) を用いてワークフローを実行可能です。**そのため、実行環境は自由に設定出来ます。(Go, Python, Ruby, etc.)**
+(余談) GitHub Actions では [Docker コンテナ](https://docs.github.com/ja/actions/creating-actions/creating-a-docker-container-action) を用いてワークフローを実行可能です。**そのため、実行環境は自由に設定出来ます。(Go, Python, Ruby, etc.)**
 
 :::
 
-早速 TypeScript のテンプレートプロジェクトを元に自分の GitHub Action プロジェクトを作成します。
+早速 TypeScript のテンプレートプロジェクトを元に自分の GitHub Actions プロジェクトを作成します。
 
 ![スクリーンショット 2021-03-21 13.25.54.png](https://i.gyazo.com/359f6f795bab9807c9f480c0f922973a.png)
-**1. テンプレートプロジェクトを元に GitHub Action の TypeScript プロジェクトを作成する**
+**1. テンプレートプロジェクトを元に GitHub Actions の TypeScript プロジェクトを作成する**
 
 ![スクリーンショット 2021-03-21 13.29.43.png](https://i.gyazo.com/76aecd3d63db95d34c086774ded122d4.png)
 **2. プロジェクトの作成後 `git clone` してきて開発する準備を整える**
 
-## GitHub Action プロジェクトの開発を進めるための準備を行う
+## GitHub Actions プロジェクトの開発を進めるための準備を行う
 
 テンプレートプロジェクトを `git clone` したら、まずは `action.yml` の内容を変更します。
-今回作成した GitHub Action の `action.yml` は下記となっております。
+今回作成した GitHub Actions の `action.yml` は下記となっております。
 
 ```yml:action.yml
-# GitHub Action のプロジェクト名
+# GitHub Actions のプロジェクト名
 name: 'Sync Zenn articles to DEV'
-# GitHub Action のプロジェクト説明文
+# GitHub Actions のプロジェクト説明文
 description: 'Just sync Zenn articles to DEV.'
-# GitHub Action の作者
+# GitHub Actions の作者
 author: 'nikaera'
-# GitHub Action に渡せる引数の値定義
+# GitHub Actions に渡せる引数の値定義
 inputs:
   api_key:
     # フィールドの指定が必須であれば true、必須でなければ false を設定する
@@ -202,34 +202,34 @@ inputs:
       Synchronize only the articles in the file path divided by line breaks.
       You can use jitterbit/get-changed-files@v1 to get only the file paths of articles that have changed in the correct format.
       (https://github.com/jitterbit/get-changed-files)
-# GitHub Action 実行後に参照可能になる値定義
+# GitHub Actions 実行後に参照可能になる値定義
 outputs:
   articles:
     description: 'A list of URLs of dev.to articles that have been created or updated'
   newly-sync-articles:
     description: 'File path list of newly synchronized articles.'
-# GitHub Action の実行環境
+# GitHub Actions の実行環境
 runs:
   using: 'node12'
   # テンプレートプロジェクトでは コンパイル先が dist になるため `dist/index.js` を指定している
   main: 'dist/index.js'
 ```
 
-TypeScript のテンプレートプロジェクトでは、バンドルツールとして [`ncc`](https://github.com/vercel/ncc) が採用されています。**GitHub Action 実行時に使用されるのは ncc によりコンパイルされた単一の JavaScript ファイル (`dist/index.js`) になります。**
+TypeScript のテンプレートプロジェクトでは、バンドルツールとして [`ncc`](https://github.com/vercel/ncc) が採用されています。**GitHub Actions 実行時に使用されるのは ncc によりコンパイルされた単一の JavaScript ファイル (`dist/index.js`) になります。**
 
 あとは `src` フォルダ内でプログラムを書いて、`npm run all && node dist/index.js` のようにコマンド実行しながら開発を進めていくだけです。
 
 ::: message info
 
-(余談) GitHub Action の開発ツールとして Docker を利用した [`act`](https://github.com/nektos/act) というものが存在するようです。ローカル環境で検証する際は [既知の問題](https://github.com/nektos/act#known-issues) に対応する必要がありそうですが、GitHub Action の開発で非常に有効活用できそうで気になっております。
+(余談) GitHub Actions の開発ツールとして Docker を利用した [`act`](https://github.com/nektos/act) というものが存在するようです。ローカル環境で検証する際は [既知の問題](https://github.com/nektos/act#known-issues) に対応する必要がありそうですが、GitHub Actions の開発で非常に有効活用できそうで気になっております。
 
 今回の開発では利用しなかったのですが、今後開発を進めていく中で利用する機会も出てきそうなので、その際は本記事内容を更新する形で知見を追記したいと考えております。
 
 :::
 
-## GitHub Action を実装する際に利用した機能
+## GitHub Actions を実装する際に利用した機能
 
-GitHub Action を実装する際に利用した機能を、実際のコード内容を抜粋して簡単に説明していきます。下記で紹介する内容は [GitHub Actions Toolkit](https://github.com/actions/toolkit) の機能です。
+GitHub Actions を実装する際に利用した機能を、実際のコード内容を抜粋して簡単に説明していきます。下記で紹介する内容は [GitHub Actions Toolkit](https://github.com/actions/toolkit) の機能です。
 
 ```typescript:main.ts
 /**
@@ -260,7 +260,7 @@ core.setOutput("articles", JSON.stringify(devtoArticles, undefined, 2));
 core.setOutput("newly-sync-articles", newlySyncedArticles.join(" "));
 
 /**
-GitHub Action 実行時に出力されるログをレベルごとに出力することが可能
+GitHub Actions 実行時に出力されるログをレベルごとに出力することが可能
 core.debug はローカル実行時のみに出力内容を確認することができる
 */
 core.debug("debug");
@@ -268,11 +268,11 @@ core.info(`update_all: ${updateAll}`);
 core.error(JSON.stringify(error));
 ```
 
-上記だけ把握してれば GitHub Action の開発は問題なく行うことができました。
+上記だけ把握してれば GitHub Actions の開発は問題なく行うことができました。
 
-# 作成した GitHub Action を実際に GitHub 上で実行可能にする
+# 作成した GitHub Actions を実際に GitHub 上で実行可能にする
 
-ローカル環境で一通り開発が完了したら、GitHub リポジトリに push した後タグ付けを行います。**GitHub Action はタグを設定しないと実行できないため必要な作業となります。** 今回タグ付けは GitHub 上で行いました。
+ローカル環境で一通り開発が完了したら、GitHub リポジトリに push した後タグ付けを行います。**GitHub Actions はタグを設定しないと実行できないため必要な作業となります。** 今回タグ付けは GitHub 上で行いました。
 
 ![スクリーンショット 2021-03-22 8.11.58.png](https://i.gyazo.com/252514cca20470154475db75b133e9b3.png)
 **1. タグの項目をクリックする**
@@ -283,11 +283,11 @@ core.error(JSON.stringify(error));
 ![スクリーンショット 2021-03-22 8.20.00.png](https://i.gyazo.com/25e019e42227ad7e0b0b634e68bb1873.png)
 **3. `Publish release` ボタンをクリックしてタグの作成を完了する**
 
-**上記の例では `v1` というタグを作成したので `nikaera/sync-zenn-with-dev-action@v1` のような記述で GitHub Action を利用可能になりました。** 私は Zenn の記事を [`zenn.dev`](https://github.com/nikaera/zenn.dev/) というリポジトリで管理しているため、早速このリポジトリに GitHub Action を導入してみます。
+**上記の例では `v1` というタグを作成したので `nikaera/sync-zenn-with-dev-action@v1` のような記述で GitHub Actions を利用可能になりました。** 私は Zenn の記事を [`zenn.dev`](https://github.com/nikaera/zenn.dev/) というリポジトリで管理しているため、早速このリポジトリに GitHub Actions を導入してみます。
 
 ## Zenn の全ての記事を DEV に同期するためのワークフロー
 
-本記事の GitHub Action では DEV の API キーを使用するため、**事前にシークレットへ `API_KEY` という名称で値を登録しておきます。**[公式サイトの手順](https://docs.github.com/ja/actions/reference/encrypted-secrets#creating-encrypted-secrets-for-a-repository) に従い シークレットの登録が完了したら、該当リポジトリに `.github/workflows/sync-zenn-with-dev-all.yml` というワークフローファイルを作成します。
+本記事の GitHub Actions では DEV の API キーを使用するため、**事前にシークレットへ `API_KEY` という名称で値を登録しておきます。**[公式サイトの手順](https://docs.github.com/ja/actions/reference/encrypted-secrets#creating-encrypted-secrets-for-a-repository) に従い シークレットの登録が完了したら、該当リポジトリに `.github/workflows/sync-zenn-with-dev-all.yml` というワークフローファイルを作成します。
 
 ```yml:.github/workflows/sync-zenn-with-dev-all.yml
 name: "Sync-All Zenn with DEV"
@@ -401,13 +401,13 @@ jobs:
 
 # おわりに
 
-GitHub Action の勉強のために取り組んだプロジェクトですが、思いの外楽しくて他にも色々な機能のアイデアがあるので随時実装していきたいと考えています。(英訳, タイトルフォーマット変更, etc.)
+GitHub Actions の勉強のために取り組んだプロジェクトですが、思いの外楽しくて他にも色々な機能のアイデアがあるので随時実装していきたいと考えています。(英訳, タイトルフォーマット変更, etc.)
 
-DEV に Zenn の記事をクロスポストする GitHub Action を公開することで、いつもお世話になっている Zenn というプラットフォームを海外の方に認知していただける機会を創出できたのかもと考えたらテンションが上がってきました。
+DEV に Zenn の記事をクロスポストする GitHub Actions を公開することで、いつもお世話になっている Zenn というプラットフォームを海外の方に認知していただける機会を創出できたのかもと考えたらテンションが上がってきました。
 
-それはさておき、Zenn の記事を他でも有効活用するための GitHub Action を開発する際には、恐らく本記事で紹介した GitHub Action のコードが参考になるはずです。
+それはさておき、Zenn の記事を他でも有効活用するための GitHub Actions を開発する際には、恐らく本記事で紹介した GitHub Actions のコードが参考になるはずです。
 
-また、[GitHub Action の Marketplace](https://docs.github.com/ja/actions/creating-actions/publishing-actions-in-github-marketplace) というものが用意されているようなので、開発がある程度完了次第、こちらに申請するのも試してみたいと考えております。
+また、[GitHub Actions の Marketplace](https://docs.github.com/ja/actions/creating-actions/publishing-actions-in-github-marketplace) というものが用意されているようなので、開発がある程度完了次第、こちらに申請するのも試してみたいと考えております。
 
 # 参考リンク
 
