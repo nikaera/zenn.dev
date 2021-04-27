@@ -16,6 +16,7 @@ jobs:
           api_key: ${{ secrets.api_key }}
           username: nikaera
           update_all: true
+          title_format: "[{type}] {title} {emoji}"
       - name: write article id of DEV to articles of Zenn.
         run: |
           git config user.name github-actions
