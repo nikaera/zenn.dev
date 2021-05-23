@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "zenn preview",
+    "start": "code .; (sleep 0.5; open http://localhost:8000/) & zenn preview",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
