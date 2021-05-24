@@ -1,6 +1,6 @@
 ---
-title: "爆速で Unity の CI 環境を GitHub Actions で構築する"
-emoji: "💨"
+title: "GameCI で Unity の CI 環境を GitHub Actions で構築する"
+emoji: "🎮"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["unity", "githubactions"]
 published: false
@@ -70,7 +70,7 @@ jobs:
 ![ワークフローの実行結果確認のための画面に遷移する](https://i.gyazo.com/2271b3cb35efc7f1c9d51702662cdac9.png)
 **ワークフローの実行結果確認のための画面に遷移する**
 
-![`alf` ファイルをダウンロードする](https://i.gyazo.com/71b9dff8266c9bc990e1b709a5191535.png)
+![`Artifacts` の項目から `alf` ファイルをダウンロードする](https://i.gyazo.com/71b9dff8266c9bc990e1b709a5191535.png)
 **`Artifacts` の項目から `alf` ファイルをダウンロードする**
 
 4. [Unity license manual activation webpage](https://license.unity3d.com) からログインして `alf` ファイルをアップロードする
@@ -103,6 +103,58 @@ GitHub Actions 上でテストを実行するために、先ほどアクティ�
 ![`UNITY_LICENSE` として `ulf` ファイルの中身を登録する](https://i.gyazo.com/f52356a229caa4e31e3ae8268d53a4e6.png)
 **`UNITY_LICENSE` として `ulf` ファイルの中身を登録する**
 
+3. これで GameCI でテストやビルドの実行を行える環境が整った。今回は下記の各種テスト実行用のワークフローファイルを追加して動作検証する。
+
+```yml:.github/workflows/test.yml
+name: Run EditMode and PlayMode Test
+on:
+  workflow_dispatch: {}
+jobs:
+  test:
+    name: Run EditMode and PlayMode Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out my unity project.
+        # actions/checkout@v2 を利用して作業ディレクトリに
+        # Unity プロジェクトの中身をダウンロードしてくる
+        uses: actions/checkout@v2
+      - name: Run EditMode and PlayMode Test
+        uses: game-ci/unity-test-runner@v2
+        env:
+          # 2. の手順で Secrets に登録した Unity ライセンスの情報を指定する
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        with:
+          projectPath: .
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          # Unity プロジェクトのバージョンを指定する
+          # ProjectSettings/ProjectVersion.txt に記載されているバージョンを入力すれば OK
+          unityVersion: 2020.3.5f1
+      # テストの実行結果をアーティファクトにアップロードして後から参照可能にする
+      - uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: Test results
+          path: artifacts
+```
+
+4. 3. のワークフローファイルをリモートリポジトリに push してワークフローを実行する。
+
+![Unity のテスト実行を行うためのワークフローファイルを実行する](https://i.gyazo.com/9bace70734f1e99955f5b9aa068b31de.png)
+**Unity のテスト実行を行うためのワークフローファイルを実行する**
+
+5. ワークフローの実行が成功したら、詳細画面に遷移した後、`Test Results` の項目から実行結果を確認する。
+
+![Unity の EditMode テストが正常に実行されている様子](https://i.gyazo.com/ffc31b5919431fedb516f1932a13ce62.png)
+**Unity の EditMode テストが正常に実行されている様子**
+
+テスト実行のためのワークフローファイルでは [`workflow_dispatch`](https://docs.github.com/ja/actions/reference/events-that-trigger-workflows#manual-events) で実行可能にしていますが、`pull_request` を利用すれば PR 時にテスト実行させたりすることが可能になります。
+
 # おわりに
 
-Unity での CI 環境構築にお悩みの方の参考になれれば幸いです。
+以前 Unity コマンドを駆使して自分で CI 環境を構築した経験があるのですが、GameCI を利用した方が全然楽に Unity CI 環境構築を GitHub Actions 上で行えました。
+
+もちろん、[Unity Cloud Build](https://unity3d.com/jp/unity/features/cloud-build) を利用すれば CI 環境の構築は以前から楽に行えました。しかし、選択肢の 1 つとして GameCI を持っておくことで、サクッと GitHub Actions に統合する形で Unity の CI 環境を導入できるのは他には無いメリットを感じました。
+
+ちなみに GameCI で利用されている Docker イメージは以前からよく使われていた [gableroux/unity3d](https://hub.docker.com/r/gableroux/unity3d/) が元になっているようでした。
+
+本記事が Unity で CI 環境構築を求められている方の助けになれれば幸いです。
