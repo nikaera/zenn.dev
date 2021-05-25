@@ -82,7 +82,7 @@ GitHub リポジトリの Secrets に `.vercel/project.json` の内容を登録�
 ![スクリーンショット 2021-01-27 5.23.06.png](https://i.gyazo.com/f630e51d4c02f1ec0362712ef2cd630c.png)
 **GitHub Actions 経由で Vercel へデプロイするのに必要な値を Secrets に登録しておく**
 
-シークレットへ必要な情報が登録できたら、GitHub Actions のワークフローファイルを作成します。**今回は Vercel 公式が用意している [Vercel Action](https://github.com/marketplace/actions/vercel-action) を利用します。**
+シークレットへ必要な情報が登録できたら、GitHub Actions のワークフローファイルを作成します。**今回は有志で開発されている [Vercel Action](https://github.com/marketplace/actions/vercel-action) を利用します。**
 
 ```yml:deploy_website.yml
 name: deploy website

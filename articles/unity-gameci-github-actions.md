@@ -1,4 +1,5 @@
 ---
+dev_article_id: 707694
 title: "GameCI で Unity の CI 環境を GitHub Actions で構築する"
 emoji: "🎮"
 type: "tech" # tech: 技術記事 / idea: アイデア
