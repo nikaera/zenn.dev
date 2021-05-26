@@ -273,11 +273,12 @@ WebGL ビルドを行う際、Unity バージョンやアセットの対応状�
 
 # おわりに
 
-以前 Unity コマンドを駆使して自分で CI 環境を構築した経験があるのですが、GameCI を利用した方が全然楽に Unity CI 環境構築を GitHub Actions 上で行えました。
+以前 Unity コマンドを駆使して自分で CI 環境を構築した経験があるのですが、
+GameCI を利用した方が全然楽に Unity CI 環境構築を GitHub Actions 上で行えました。
 
 ちなみに [GameCI で利用されている Docker イメージ](https://game.ci/docs/docker/docker-images) は以前からよく使われていた [gableroux/unity3d](https://hub.docker.com/r/gableroux/unity3d/) が元になっているようでした。
 
-というよりも [GabLeRoux さんのホームページ](https://gableroux.com/about/) を見たら、GameCI の開発を始めた方のようでした。すごい。
+ってか [GabLeRoux さんのホームページ](https://gableroux.com/about/) を見たら、GameCI の開発を始めた方のようでした。すごい。
 
 本記事が GitHub Actions で Unity CI 環境構築を始めようとしている方の助けになれれば幸いです。
 
