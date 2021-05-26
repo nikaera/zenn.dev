@@ -9,7 +9,7 @@ published: true
 
 # はじめに
 
-先日同僚が Unity の CI 環境を構築するためのライブラリである [GameCI](https://game.ci/) について教えてくれました。早速 GameCI の GitHub Actions を利用して、サンプルプロジェクトで色々動作検証してみたところ、確かに Unity の CI 環境を楽に構築できることが分かりました。
+先日同僚が Unity の CI 環境を構築するためのライブラリである [GameCI](https://game.ci/) について教えてくれました。早速 GameCI の GitHub Actions を利用して、サンプルプロジェクトで色々動作検証してみたところ、Unity の CI 環境を楽に構築できることが分かりました。
 
 もちろん、[Unity Cloud Build](https://unity3d.com/jp/unity/features/cloud-build) を利用すれば CI 環境の構築は以前から楽にできました。しかし、選択肢の 1 つとして GameCI を持っておくことで、**サクッと GitHub Actions に統合する形で Unity の CI 環境を導入できるのは他には無いメリットを感じました。**
 
