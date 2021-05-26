@@ -4,7 +4,7 @@ title: "GameCI で Unity の CI 環境を GitHub Actions で構築する"
 emoji: "🎮"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["unity", "githubactions"]
-published: false
+published: true
 ---
 
 # はじめに
