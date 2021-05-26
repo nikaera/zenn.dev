@@ -30,7 +30,7 @@ GameCI には現状下記の GitHub Actions が用意されているようです
 | [Builder](https://game.ci/docs/github/builder)                         | 任意の Platform ビルドを実行する ([アーティファクト](https://docs.github.com/ja/actions/guides/storing-workflow-data-as-artifacts) 利用でダウンロードも可能)                                                                                                                                |
 | [Returning a license](https://game.ci/docs/github/returning-a-license) | Unity ライセンスの返却ができる (Professional License のみ対応)                                                                                                                                                                                                                              |
 | [Remote builder](https://game.ci/docs/github/remote-builder)           | GitHub Actions のスペックでは満足のいくビルドができない際に AWS 環境でハイスペックなマシンを用意してビルドできる。ビルドのためのインフラ構築には [AWS CloudFormation](https://aws.amazon.com/jp/cloudformation/) を使用している (現在は AWS のみ対応。今後 GCP, Azure にも対応予定とのこと) |
-| [Deployment](https://game.ci/docs/github/deployment/android)           | Unity ビルドを各種 Platform 向けにデプロイする (iOS 及び Android のみ記載あり。厳密に言うと `Builder` でビルド出力した内容を [`fastlane`](https://docs.fastlane.tools/) を用いてデプロイするためのワークフロー紹介になっている)                                                             |
+| [Deployment](https://game.ci/docs/github/deployment/android)           | Unity ビルドを各種 Platform 向けにデプロイする (iOS 及び Android のみ記載あり。厳密に言うと `Builder` でビルド出力した内容を [`fastlane`](https://fastlane.tools/) を用いてデプロイするためのワークフロー紹介になっている)                                                                  |
 
 上記を見ると既に **GameCI には開発者として Unity CI に欲しい機能は最低限揃っているように見受けられました。** また本記事では、今後機会があれば試してみたいと考えていますが **Remote builder 及び Deployment** については言及していません。
 
@@ -97,7 +97,7 @@ jobs:
 
 ## Test runner: PlayMode 及び EditMode テストを実行して結果を参照する
 
-GitHub Actions 上でテストを実行するために、先ほどアクティベートした Unity ライセンスの情報を ワークフロー上で扱えるようにする必要があります。そのため、まずは Secrets に `ulf` ファイルの内容を登録することから始めます。
+GitHub Actions 上でテストを実行するために、**先ほどアクティベートした Unity ライセンスの情報を ワークフロー上で扱えるようにする必要があります。そのため、まずは Secrets に `ulf` ファイルの内容を登録することから始めます。**
 
 ![1. Unity ライセンスの情報登録のため、Github リポジトリの `Secrets` 登録画面に遷移する](https://i.gyazo.com/e126ae5e2fe9339d56047b8497808100.png)
 **1. Unity ライセンスの情報登録のため、Github リポジトリの `Secrets` 登録画面に遷移する**
@@ -276,13 +276,24 @@ WebGL ビルドを行う際、Unity バージョンやアセットの対応状�
 以前 Unity コマンドを駆使して自分で CI 環境を構築した経験があるのですが、
 GameCI を利用した方が全然楽に Unity CI 環境構築を GitHub Actions 上で行えました。
 
-ちなみに [GameCI で利用されている Docker イメージ](https://game.ci/docs/docker/docker-images) は以前からよく使われていた [gableroux/unity3d](https://hub.docker.com/r/gableroux/unity3d/) が元になっているようでした。
-
-ってか [GabLeRoux さんのホームページ](https://gableroux.com/about/) を見たら、GameCI の開発を始めた方のようでした。すごい。
+ちなみに [GameCI で利用されている Docker イメージ](https://game.ci/docs/docker/docker-images) は以前からよく使われていた [gableroux/unity3d](https://hub.docker.com/r/gableroux/unity3d/) が元になっているようでした。ってか [GabLeRoux さんのホームページ](https://gableroux.com/about/) を見たら、GameCI の開発を始めた方のようでした。すごい。
 
 本記事が GitHub Actions で Unity CI 環境構築を始めようとしている方の助けになれれば幸いです。
 
 # 参考リンク
+
+- [GameCI - The fastest and easiest way to automatically test and build your game projects](https://game.ci/)
+- [Services \- Cloud Build \- Unity](https://unity3d.com/jp/unity/features/cloud-build)
+- [AWS CloudFormation（テンプレートを使ったリソースのモデル化と管理）\| AWS](https://aws.amazon.com/jp/cloudformation/)
+- [fastlane \- App automation done right](https://fastlane.tools/)
+- [リポジトリのデフォルトブランチ名を管理する \- GitHub Docs](https://docs.github.com/ja/github/setting-up-and-managing-your-github-user-account/managing-user-account-settings/managing-the-default-branch-name-for-your-repositories#about-management-of-the-default-branch-name)
+- [Unity でパーソナルライセンスのシリアルナンバーを発行する \| Yucchiy's Note](https://blog.yucchiy.com/2019/01/08/how-to-get-unity-free-license/)
+- [Unity license manual activation webpage](https://license.unity3d.com)
+- [暗号化されたシークレット \- GitHub Docs](https://docs.github.com/ja/actions/reference/encrypted-secrets)
+- [Unity \- Scripting API: BuildTarget](https://docs.unity3d.com/ScriptReference/BuildTarget.html)
+- [Unity 1 週間ゲームジャム \| フリーゲーム投稿サイト unityroom](https://unityroom.com/unity1weeks)
+- [Unity2020 WebGL 9 割まで読み込めるがアプリが起動しない不具合の解決方法 \- Qiita](https://qiita.com/aguroshou0413/items/1451a6779a92acb96b78)
+- [Deploy to GitHub Pages · Actions · GitHub Marketplace](https://github.com/marketplace/actions/deploy-to-github-pages)
 
 [^1]: `alf` ファイル及び `ulf` ファイルの実態は XML ファイルです。
 [^2]: 適当なテキストエディタで `ulf` ファイルを開き全文をコピー & ペーストします。
