@@ -4,7 +4,7 @@ title: "Unity で iOS/Android アプリの設定値をセキュアに扱う方�
 emoji: "🔑"
 type: "tech"
 topics: ["unity", "ios", "android"]
-published: false
+published: true
 ---
 
 # はじめに
