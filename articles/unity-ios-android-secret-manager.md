@@ -1,4 +1,5 @@
 ---
+dev_article_id: 792603
 title: "Unity で iOS/Android アプリの設定値をセキュアに扱う方法"
 emoji: "🔑"
 type: "tech"
