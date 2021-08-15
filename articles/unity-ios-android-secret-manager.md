@@ -25,11 +25,11 @@ https://github.com/nikaera/Unity-iOS-Android-SecretManager-Sample
 
 # Android のネイティブプラグインを作成する
 
-Android 環境ではまず [External Dependency Manager for Unity](https://github.com/googlesamples/unity-jar-resolver) を利用して、Unity のネイティブプラグインで `EncryptedSharedPreferences` 利用可能にします。
+Android 環境ではまず [External Dependency Manager for Unity](https://github.com/googlesamples/unity-jar-resolver) を利用して、Unity の Android ネイティブプラグインで `EncryptedSharedPreferences` 利用可能にします。
 
 ## External Dependency Manager for Unity で必要なパッケージをインストールする
 
-`External Dependency Manager for Unity` 導入に必要となる [unitypackage](https://github.com/googlesamples/unity-jar-resolver/blob/master/external-dependency-manager-latest.unitypackage) をダウンロードして、`EncryptedSharedPreferences` を導入したい Unity プロジェクトを開いてから `unitypackage` をクリックすることで、`External Dependency Manager for Unity` を Unity プロジェクトにインポートします。
+`External Dependency Manager for Unity` をインポートするため [unitypackage](https://github.com/googlesamples/unity-jar-resolver/blob/master/external-dependency-manager-latest.unitypackage) をダウンロードして、**`EncryptedSharedPreferences` を導入したい Unity プロジェクトを開いてから `unitypackage` をクリックすることで、`External Dependency Manager for Unity` を Unity プロジェクトにインポートします。**
 
 ![ダウンロードした `unitypackage` をクリックして Unity プロジェクトに External Dependency Manager for Unity をインポートする](https://i.gyazo.com/1af7cdf4d7d5749e59e151eef1ca5493.png)
 
@@ -67,10 +67,10 @@ External Dependency Manager for Unity で各種パッケージを管理する方
 ![1. Unity メニューから `Assets -> External Dependency Manager -> Android Resolver -> Force Resolve` を選択する](https://i.gyazo.com/df394e15149e54dae3e9a81848512ee9.png)
 **1. Unity メニューから `Assets -> External Dependency Manager -> Android Resolver -> Force Resolve` を選択する**
 
-![2. 実行に成功すると EncryptedSharedPreferences を利用するのに必要な jar ファイル群が `Assets/Plugins/Android` フォルダに配置される](https://i.gyazo.com/f6d2ec95ef9c2afdc857fecef2b165e5.png)
-**2. 実行に成功すると EncryptedSharedPreferences を利用するのに必要な jar ファイル群が `Assets/Plugins/Android` フォルダに配置される**
+![2. 実行に成功すると EncryptedSharedPreferences を利用するのに必要なライブラリ群が `Assets/Plugins/Android` フォルダに配置される](https://i.gyazo.com/f6d2ec95ef9c2afdc857fecef2b165e5.png)
+**2. 実行に成功すると EncryptedSharedPreferences を利用するのに必要なライブラリ群が `Assets/Plugins/Android` フォルダに配置される**
 
-ここまで来ればあとはネイティブコードを `Assets/Plugins/Android` フォルダ内に配置して Unity 側から叩けるようにするだけです。
+ここまで来ればあとは Android ネイティブコードを `Assets/Plugins/Android` フォルダ内に配置して Unity 側から叩けるようにするだけです。
 
 ## EncryptedSharedPreferences を利用するためのネイティブコードを追加する
 
@@ -222,7 +222,7 @@ _sharedPreferences.Delete("name");
 
 iOS の場合は外部ライブラリを利用しないため、`External Dependency Manager for Unity` は利用しません。**本来であれば Swift で信頼できる外部フレームワークを取り込み利用できると良さそうですが、今回は Objective-C でネイティブプラグインを書いていきます。**[^2]
 
-[^2]: [CocoaPods](https://cocoapods.org/) もサポートされているようなので、iOS でも Android 同様、外部ライブラリを取り込むのは簡単にできそうでした。
+[^2]: [CocoaPods](https://cocoapods.org/) もサポートされているようなので、iOS でも Android 同様、外部ライブラリを取り込むのは簡単にできそうでした。例えば [KeychainAccess](https://github.com/kishikawakatsumi/KeychainAccess) とか使いたい。
 
 ## Keychain Services を利用するためのネイティブコードを追加する
 
@@ -430,7 +430,7 @@ public abstract class ISecretManager
 
 ```
 
-その後、`Assets/Scripts/EncryptedSharedPreferences.cs` 及び `Assets/Scripts/KeychainService.cs` を下記の通り `ISecretManager` の実装に紐付けます。
+その後、`Assets/Scripts/EncryptedSharedPreferences.cs` および `Assets/Scripts/KeychainService.cs` を下記の通り `ISecretManager` の実装に紐付けます。
 
 ```csharp:Assets/Scripts/EncryptedSharedPreferences.cs
 using UnityEngine;
@@ -595,7 +595,7 @@ public static class SecretManager
 
 ```
 
-これでプラットフォーム間の実装差異を気にすることなく、下記のような記述で設定値の保存や取得などを行えます。**iOS/Android 以外のプラットフォームで追加実装する際は、`ISecretManager` の実装クラスを新たに作成することで簡単に追加できます。**
+これでプラットフォーム間の実装差異を気にすることなく、下記のような記述で設定値の保存や取得などを行えます。**iOS/Android 以外のプラットフォームで追加実装したい場合は、`ISecretManager` の実装クラスを新たに作成することで簡単に追加できます。**
 
 ```csharp
 // ...
@@ -616,7 +616,9 @@ SecretManager.Delete("name");
 
 # おわりに
 
-今回は iOS/Android で設定値をセキュアに扱うための方法についてまとめてみました。本記事の内容に誤りがあったり、実際にはセキュアな実装ができていない等々あれば是非コメントでご指摘いただけますと幸いです。
+今回は iOS/Android で設定値をセキュアに扱うための方法についてまとめてみました。実際は `Keychain Services` 周りは実装が大変なので、`External Dependency Manager for Unity` とか使って [KeychainAccess](https://github.com/kishikawakatsumi/KeychainAccess) のような外部ライブラリを利用する構成のほうが良いと思われます。
+
+本記事の内容に誤りがあったり、実際にはセキュアな実装ができていない等々あれば是非コメントでご指摘いただけますと幸いです。
 
 # 参考リンク
 
