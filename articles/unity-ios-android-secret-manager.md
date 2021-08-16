@@ -596,7 +596,7 @@ public static class SecretManager
 
 ```
 
-これでプラットフォーム間の実装差異を気にすることなく、下記のような記述で設定値の保存や取得などを行えます。**iOS/Android 以外のプラットフォームで追加実装したい場合は、`ISecretManager` の実装クラスを新たに作成することで簡単に追加できます。**
+これでプラットフォーム間の実装差異を気にすることなく、下記のような記述で設定値の保存や取得などを行えます。**iOS/Android 以外のプラットフォームで追加実装したい場合は [プラットフォーム依存コンパイル](https://docs.unity3d.com/ja/2021.1/Manual/PlatformDependentCompilation.html) と `ISecretManager` の実装クラスを新たに作成することで簡単に追加できます。**
 
 ```csharp
 // ...
