@@ -404,7 +404,7 @@ _keychainService.Delete("name");
 このままだとプラットフォームを切り替える毎にコードを書き直さないとならないので、インターフェースを利用して共通化を行います。
 
 ```csharp:Assets/Scripts/ISecretManager.cs
-public abstract class ISecretManager
+public interface ISecretManager
 {
     /// <summary>
     /// 指定したキーで値を保存する関数
@@ -412,21 +412,21 @@ public abstract class ISecretManager
     /// <param name="key">キー</param>
     /// <param name="value">値</param>
     /// <returns>保存に成功したかどうか</returns>
-    public abstract bool Put(string key, string value); 
+    bool Put(string key, string value); 
     
     /// <summary>
     /// 指定したキーの値を取得する関数
     /// </summary>
     /// <param name="key">キー</param>
     /// <returns>指定したキーで設定された値、無ければ null</returns>
-    public abstract string Get(string key);
+    string Get(string key);
     
     /// <summary>
     /// 指定したキーの値を削除する関数
     /// </summary>
     /// <param name="key">キー</param>
     /// <returns>削除に成功したかどうか</returns>
-    public abstract bool Delete(string key);
+    bool Delete(string key);
 }
 
 ```
@@ -455,17 +455,17 @@ class EncryptedSharedPreferences: ISecretManager
     
     #region ISecretManager
 
-    public override bool Put(string key, string value)
+    public bool Put(string key, string value)
     {
         return _secretManager.Call<bool>("put", key, value);
     }
 
-    public override string Get(string key)
+    public string Get(string key)
     {
         return _secretManager.Call<string>("get", key);
     }
 
-    public override bool Delete(string key)
+    public bool Delete(string key)
     {
         return _secretManager.Call<bool>("delete", key);
     }
@@ -500,7 +500,7 @@ class KeychainService: ISecretManager
     // KeychainService.mm に定義した関数を呼び出す
     #region ISecretManager
     
-    public override bool Put(string key, string value)
+    public bool Put(string key, string value)
     {
 #if UNITY_IOS
         return addItem(key, value) == 0;
@@ -509,7 +509,7 @@ class KeychainService: ISecretManager
 #endif
     }
 
-    public override string Get(string key)
+    public string Get(string key)
     {
 #if UNITY_IOS
         return getItem(key);
@@ -518,7 +518,7 @@ class KeychainService: ISecretManager
 #endif
     }
 
-    public override bool Delete(string key)
+    public bool Delete(string key)
     {
 #if UNITY_IOS
         return deleteItem(key) == 0;
