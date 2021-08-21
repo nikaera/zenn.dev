@@ -28,9 +28,9 @@ https://github.com/nikaera/Unity-iOS-Android-SecretManager-Sample
 
 Android 環境ではまず [External Dependency Manager for Unity](https://github.com/googlesamples/unity-jar-resolver) を利用して、Unity の Android ネイティブプラグインで `EncryptedSharedPreferences` 利用可能にします。
 
-:::details Gradle を利用したライブラリのインストール方法
+## (追記) Gradle を利用したライブラリのインストール方法
 
-本記事では `External Dependency Manager for Unity` を利用して、外部ライブラリを取り込む方法について紹介しております。しかし、[shiena](https://twitter.com/shiena) さんにご教授いただいたのですが、[こちらの記事](https://zenn.dev/shiena/articles/unity-sqlcipher#gradle%E3%82%92%E5%88%A9%E7%94%A8)のように Gradle を利用することでも簡易にライブラリの取り込みが可能なようでした。
+[shiena](https://twitter.com/shiena) さんにご教授いただいたのですが、[こちらの記事](https://zenn.dev/shiena/articles/unity-sqlcipher#gradle%E3%82%92%E5%88%A9%E7%94%A8)のように Gradle を利用することでも簡易にライブラリの取り込みが可能なようでした。
 
 手順は上記の記事をご参照いただくとして、Gradle を利用する方法で外部ライブラリを取り込む際の `Assets/Plugins/Android/mainTemplate.gradle` および `Assets/Plugins/Android/gradleTemplate.properties` は下記になります。
 
@@ -52,9 +52,11 @@ unityStreamingAssets=.unity3d**STREAMING_ASSETS**
 **ADDITIONAL_PROPERTIES**
 ```
 
-Gradle を利用した方法でライブラリを利用される際は、後述の `External Dependency Manager for Unity で必要なパッケージをインストールする` の手順はスキップ可能です。`EncryptedSharedPreferences を利用するためのネイティブコードを追加する` のステップから進めてください。
+**Gradle を利用した方法でライブラリを利用される際は、次の `External Dependency Manager for Unity で必要なパッケージをインストールする` の手順はスキップ可能です。`EncryptedSharedPreferences を利用するためのネイティブコードを追加する` のステップから進めてください。**
 
-:::
+`External Dependency Manager for Unity` を利用する方法だと、取り込み先プロジェクト内でライブラリの競合が発生する恐れがあります。Gradle を利用する方法であれば回避が可能です。[^1]
+
+[^1]: 逆に `External Dependency Manager for Unity` を利用する方法のメリットは、UnityPackage などでライブラリとして配布する際に、ライブラリを動作させるのに必要な外部パッケージも同梱した状態で配布が可能になるなどがあります。(当然ライセンスには気を付ける必要がありますが...)
 
 ## External Dependency Manager for Unity で必要なパッケージをインストールする
 
@@ -62,9 +64,9 @@ Gradle を利用した方法でライブラリを利用される際は、後述�
 
 ![ダウンロードした `unitypackage` をクリックして Unity プロジェクトに External Dependency Manager for Unity をインポートする](https://i.gyazo.com/1af7cdf4d7d5749e59e151eef1ca5493.png)
 
-Unity プロジェクトの `Build Settings` からプラットフォームは Android に切り替えておきます。`Enable Android Auto-resolution?` というダイアログの選択肢はどちらを選んでも構いません。[^1]
+Unity プロジェクトの `Build Settings` からプラットフォームは Android に切り替えておきます。`Enable Android Auto-resolution?` というダイアログの選択肢はどちらを選んでも構いません。[^2]
 
-[^1]: パッケージの依存関係を自動で解決するかどうかという選択肢になります。本記事では明示的に Resolve を実行するため `Disable` でも `Enable` でも進行上の問題はありません。
+[^2]: パッケージの依存関係を自動で解決するかどうかという選択肢になります。本記事では明示的に Resolve を実行するため `Disable` でも `Enable` でも進行上の問題はありません。
 
 External Dependency Manager for Unity で各種パッケージを管理する方法は [README](https://github.com/googlesamples/unity-jar-resolver#android-resolver-usage) に記載がある通り、**`*Dependencies.xml` というファイルを `Editor` フォルダに配置することで可能になります。**
 
@@ -249,9 +251,9 @@ _sharedPreferences.Delete("name");
 
 # iOS のネイティブプラグインを作成する
 
-iOS の場合は外部ライブラリを利用しないため、`External Dependency Manager for Unity` は利用しません。**本来であれば Swift で信頼できる外部フレームワークを取り込み利用できると良さそうですが、今回は Objective-C でネイティブプラグインを書いていきます。**[^2]
+iOS の場合は外部ライブラリを利用しないため、`External Dependency Manager for Unity` は利用しません。**本来であれば Swift で信頼できる外部フレームワークを取り込み利用できると良さそうですが、今回は Objective-C でネイティブプラグインを書いていきます。**[^3]
 
-[^2]: [CocoaPods](https://cocoapods.org/) もサポートされているようなので、iOS でも Android 同様、外部ライブラリを取り込むのは簡単にできそうでした。例えば [KeychainAccess](https://github.com/kishikawakatsumi/KeychainAccess) とか使いたい。
+[^3]: [CocoaPods](https://cocoapods.org/) もサポートされているようなので、iOS でも Android 同様、外部ライブラリを取り込むのは簡単にできそうでした。例えば [KeychainAccess](https://github.com/kishikawakatsumi/KeychainAccess) とか使いたい。
 
 ## Keychain Services を利用するためのネイティブコードを追加する
 
