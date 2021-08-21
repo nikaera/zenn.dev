@@ -28,6 +28,34 @@ https://github.com/nikaera/Unity-iOS-Android-SecretManager-Sample
 
 Android 環境ではまず [External Dependency Manager for Unity](https://github.com/googlesamples/unity-jar-resolver) を利用して、Unity の Android ネイティブプラグインで `EncryptedSharedPreferences` 利用可能にします。
 
+:::details Gradle を利用したライブラリのインストール方法
+
+本記事では `External Dependency Manager for Unity` を利用して、外部ライブラリを取り込む方法について紹介しております。しかし、[shiena](https://twitter.com/shiena) さんにご教授いただいたのですが、[こちらの記事](https://zenn.dev/shiena/articles/unity-sqlcipher#gradle%E3%82%92%E5%88%A9%E7%94%A8)のように Gradle を利用することでも簡易にライブラリの取り込みが可能なようでした。
+
+手順は上記の記事をご参照いただくとして、Gradle を利用する方法で外部ライブラリを取り込む際の `Assets/Plugins/Android/mainTemplate.gradle` および `Assets/Plugins/Android/gradleTemplate.properties` は下記になります。
+
+```diff gradle:Plugins/Android/mainTemplate.gradle
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
++    implementation 'androidx.security:security-crypto:1.1.0-alpha03'
+**DEPS**}
+
+android {
+```
+
+```diff properties:Assets/Plugins/Android/gradleTemplate.properties
+org.gradle.jvmargs=-Xmx**JVM_HEAP_SIZE**M
+org.gradle.parallel=true
+android.enableR8=**MINIFY_WITH_R_EIGHT**
++ android.useAndroidX=true
+unityStreamingAssets=.unity3d**STREAMING_ASSETS**
+**ADDITIONAL_PROPERTIES**
+```
+
+Gradle を利用した方法でライブラリを利用される際は、後述の `External Dependency Manager for Unity で必要なパッケージをインストールする` の手順はスキップ可能です。`EncryptedSharedPreferences を利用するためのネイティブコードを追加する` のステップから進めてください。
+
+:::
+
 ## External Dependency Manager for Unity で必要なパッケージをインストールする
 
 `External Dependency Manager for Unity` をインポートするため [unitypackage](https://github.com/googlesamples/unity-jar-resolver/blob/master/external-dependency-manager-latest.unitypackage) をダウンロードして、**`EncryptedSharedPreferences` を導入したい Unity プロジェクトを開いてから `unitypackage` をクリックすることで、`External Dependency Manager for Unity` を Unity プロジェクトにインポートします。**
