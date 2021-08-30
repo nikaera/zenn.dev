@@ -135,7 +135,7 @@ Zenn の記事を新規で DEV に同期する際は、DEV に記事を新規作
     if: steps.dev-to.outputs.newly-sync-articles
 ```
 
-::: message alert
+:::message alert
 
 上記のジョブで `newly-sync-articles` に格納された `dev_article_id` が追記された Zenn 記事は随時コミットに反映しないと、**Zenn の全ての記事が同期毎 DEV に新規作成され続けるという不具合を引き起こしてしまうので、ご注意ください**
 
@@ -149,7 +149,7 @@ Zenn の記事を新規で DEV に同期する際は、DEV に記事を新規作
 
 GitHub 公式が TypeScript で GitHub Actions を作るための [テンプレートプロジェクト](https://github.com/actions/typescript-action) を用意してくれています。今回はこのテンプレートプロジェクトを利用する形でプロジェクトを作成しました。
 
-::: message info
+:::message
 
 (余談) GitHub Actions では [Docker コンテナ](https://docs.github.com/ja/actions/creating-actions/creating-a-docker-container-action) を用いてワークフローを実行可能です。**そのため、実行環境は自由に設定出来ます。(Go, Python, Ruby, etc.)**
 
@@ -219,7 +219,7 @@ TypeScript のテンプレートプロジェクトでは、バンドルツール
 
 あとは `src` フォルダ内でプログラムを書いて、`npm run all && node dist/index.js` のようにコマンド実行しながら開発を進めていくだけです。
 
-::: message info
+:::message
 
 (余談) GitHub Actions の開発ツールとして Docker を利用した [`act`](https://github.com/nektos/act) というものが存在するようです。ローカル環境で検証する際は [既知の問題](https://github.com/nektos/act#known-issues) に対応する必要がありそうですが、GitHub Actions の開発で非常に有効活用できそうで気になっております。
 

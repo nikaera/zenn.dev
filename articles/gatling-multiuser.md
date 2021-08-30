@@ -39,7 +39,7 @@ published: true
 ファイルダウンロード後はダウンロードした zip ファイルを適当なフォルダに展開して配置します。
 早速ターミナルで展開したフォルダ内にある `./bin/gatling.sh` を実行して、正常にコマンドが実行できるか確認してみます。
 
-::: message info
+:::message
 
 OS が Windows の場合は `./bin/gatling.bat` を実行します。
 
@@ -392,7 +392,7 @@ class TestCloudFunctionSimulation extends Simulation {
 `def getPlayfabAuth` は PlayFab 認証するための関数となっていますが、**適宜認証に用いるサービス毎で関数の内容を変更することで、他サービスで認証するための関数として利用可能です。**
 また `playfabUsers.foreach` 内で各ユーザが実行するテストシナリオを生成しつつ、それらを `scenarios` 変数に保持しています。そうすることで、最後に `setUp` 関数でシナリオをまとめてセットできるようになります。
 
-::: message info
+:::message
 
 `playfabUsers.foreach` で値を指定するのではなく [CSV でテストに与えるフィードデータを定義する](http://www.ajisaba.net/develop/gatling/test_case_csv_feeder.html) する方法もあります。認証部分も含めてテストシナリオを書きたい場合にも便利に利用できます。またアカウント情報を CSV ファイルに定義しておくと、テストユーザの情報を新規追加したい場合で管理が楽になります。
 

@@ -89,7 +89,7 @@ jobs:
 
 これで Unity ライセンスファイルのアクティベートは完了です。**次にアクティベートしたライセンスファイルを GitHub リポジトリの [Secrets](https://docs.github.com/ja/actions/reference/encrypted-secrets) に登録して、GameCI で PlayMode 及び EditMode のテストが実行できるようにしていきます。**
 
-::: message
+:::message
 
 `alf` 拡張子のファイルがライセンスリクエストファイルを指していて、Unity ライセンスの発行に必要となるファイルです。`ulf` 拡張子のファイルが Unity ライセンスのファイルです。[^1]
 

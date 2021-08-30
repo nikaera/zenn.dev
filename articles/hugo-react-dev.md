@@ -7,7 +7,7 @@ topics: ["hugo", "react", "rss", "javascript", "typescript"]
 published: true
 ---
 
-::: message info
+:::message
 
 この記事は [Static Site Generator Advent Calendar 2020](https://qiita.com/advent-calendar/2020/static-site-generator) 22 日目の記事です。
 
@@ -83,7 +83,7 @@ ReactDOM.render(
 <!-- ... -->
 ```
 
-:::message info
+:::message
 
 ちなみに `$options` で指定している ESBuild でビルド時に指定可能なオプションは [Hugo の公式ページ](https://gohugo.io/hugo-pipes/js/) に記載されています。
 
