@@ -7,7 +7,7 @@ topics: ["hugo", "githubactions", "githubpages"]
 published: true
 ---
 
-::: message info
+:::message info
 
 この記事は [Static Site Generator Advent Calendar 2020](https://qiita.com/advent-calendar/2020/static-site-generator) 10 日目の記事です。
 
