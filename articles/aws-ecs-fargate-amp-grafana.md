@@ -4,7 +4,7 @@ title: "ECS Fargate のメトリクスを Prometheus Agent 使って AMP に送�
 emoji: "🔥"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["fargate", "prometheus", "grafana", "aws", "nodejs"]
-published: false
+published: true
 ---
 
 # はじめに
