@@ -429,7 +429,7 @@ echo 'GET http://<識別子>.ap-northeast-1.elb.amazonaws.com/metrics' | vegeta 
 
 今回は ECS Fargate のメトリクスを Prometheus Agent で Amazon Managed Service for Prometheus (AMP) に送信し、それを Grafana で可視化する方法について紹介しました。
 
-ECS のサービスでタスクを実行する場合は [サービスディスカバリ](https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/developerguide/service-discovery.html) の利用が可能なため、Prometheus の [サービスディスカバリの設定](https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/developerguide/service-discovery.html) を行うことで、単一の Prometheus で全てのコンテナのメトリクスを扱うことも可能です。
+ECS のサービスでタスクを実行する場合は [サービスディスカバリ](https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/developerguide/service-discovery.html) の利用が可能なため、Prometheus の [サービスディスカバリの設定](https://prometheus.io/docs/prometheus/latest/configuration/configuration/#dns_sd_config) を行うことで、単一の Prometheus で全てのコンテナのメトリクスを扱うことも可能です。
 
 また Node.js アプリを作成する際に利用した `prom-client` で [カスタムメトリクス](https://github.com/siimon/prom-client#custom-metrics) を作成することで、監視したい項目を自由に増やすことも可能です。
 
