@@ -417,7 +417,7 @@ Prometheus (AMP) に送信したメトリクスを Grafana で可視化するた
 ここまでの手順でメトリクスの可視化は完了しましたが、負荷に応じて実際にメトリクスが変化する様子も確認してみます。[Vegeta](https://github.com/tsenart/vegeta) を利用して、実際に負荷をかけてみます。下記コマンドを実行します。
 
 ```bash
-echo 'GET <ALB の /metrics URL>' | vegeta attack -duration=5s | vegeta report
+echo 'GET http://<識別子>.ap-northeast-1.elb.amazonaws.com/metrics' | vegeta attack -duration=5s | vegeta report
 ```
 
 その後、再び Grafana のダッシュボードを見にいきます。負荷をかけた時間帯のみグラフに変化があることが確認できるはずです。
