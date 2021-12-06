@@ -8,15 +8,23 @@ published: false
 
 # はじめに
 
+:::message
+この記事は [AWS Advent Calendar 2021](https://qiita.com/advent-calendar/2021/aws) の 5 日目の記事です。
+:::
+
 [Fargate](https://aws.amazon.com/jp/fargate/) で Node.js アプリのメトリクスを [Prometheus Agent](https://prometheus.io/blog/2021/11/16/agent/) をサイドカーコンテナとして動かして、[Amazon Managed Service for Prometheus (AMP)](https://aws.amazon.com/jp/prometheus/) に送信して [Grafana](https://grafana.com/) で見られるようにしてみました。
 
+:::message alert
 ちなみに Promethus Agent はまだ [実験的な機能](https://prometheus.io/blog/2021/11/16/agent/#prometheus-agent-mode) なため、**実務での利用は推奨しません。**
+:::
+
 本記事の環境構築には [AWS CDK](https://aws.amazon.com/jp/cdk/) を利用しています。
 
 # 動作環境
 
 * Node.js v16.13.0
 * AWS CDK 2.0.0 (build 4b6ce31)
+* Prometheus 2.32.0-rc.0
 
 # 環境構築
 
