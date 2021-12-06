@@ -1,4 +1,5 @@
 ---
+dev_article_id: 918242
 title: "ECS Fargate のメトリクスを Prometheus Agent 使って AMP に送って Grafana で監視する"
 emoji: "🔥"
 type: "tech" # tech: 技術記事 / idea: アイデア
