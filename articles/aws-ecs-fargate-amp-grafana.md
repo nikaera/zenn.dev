@@ -37,6 +37,8 @@ published: true
 
 ## ~~AMP のワークスペースを作成する~~
 
+:::details 手動で AMP のワークスペースを作成する手順
+
 まず、[AMP のコンソール画面](https://ap-northeast-1.console.aws.amazon.com/prometheus/home) に遷移してワークスペースを作成します。
 
 ![AMP のコンソール画面からワークスペースを作成する](https://i.gyazo.com/bf30611d6bc0f6b93281fd80123b611e.png)
@@ -49,6 +51,8 @@ published: true
 **3. AMP のワークスペース作成完了を確認すると同時に設定値を控えておく**
 
 AMP ワークスペースの `エンドポイント - リモート書き込み URL` は、**Prometheus Agent で AMP にデータ送信する際や、Grafana でデータソースを登録する際などに必要となるため控えておきます。**
+
+:::
 
 ## AWS CDK で環境構築する
 
