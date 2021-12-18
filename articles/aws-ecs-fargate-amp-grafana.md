@@ -25,13 +25,17 @@ published: true
 
 * Node.js v16.13.0
 * AWS CDK 2.0.0 (build 4b6ce31)
-* Prometheus 2.32.0-rc.0
+* Prometheus 2.32.1
 
 # 環境構築
 
-早速環境構築を進めていきます。まだ AMP については CDK から操作できないようでしたので、ワークスペースの作成については AWS コンソールから手動で行います。(2021/12/06)
+~~早速環境構築を進めていきます。まだ AMP については CDK から操作できないようでしたので、ワークスペースの作成については AWS コンソールから手動で行います。(2021/12/06)~~
 
-## AMP のワークスペースを作成する
+**[`aws-aps`](https://docs.aws.amazon.com/cdk/api/latest/docs/aws-aps-readme.html) を利用することで AWS CDK からでも Amazon Managed Service for Prometheus のワークスペースを作成すること確認できましたので、そちらの利用を推奨いたします... 🙇🙇**
+
+**[lib/prometheus-agent-test-stack.ts](#ecs-fargate-上で-node.js-アプリおよび-prometheus-agent-を動作させる) のコードも修正済みで AWS CDK で Amazon Managed Service for Prometheus のワークスペースを作成するようにしました。そのため、下記の [AMP のワークスペースを作成する](#amp-のワークスペースを作成する) はスキップ可能です。(2021/12/18 追記)**
+
+## ~~AMP のワークスペースを作成する~~
 
 まず、[AMP のコンソール画面](https://ap-northeast-1.console.aws.amazon.com/prometheus/home) に遷移してワークスペースを作成します。
 
@@ -96,7 +100,7 @@ server.on('request', async function(req, res) {
 server.listen(8080);
 ```
 
-`node index.js`　コマンドを実行して `http://localhost:8080/metrics` にアクセスしてみます。下記のように各種メトリクスが出力されている様子が確認できれば OK です。
+`node index.js` コマンドを実行して `http://localhost:8080/metrics` にアクセスしてみます。下記のように各種メトリクスが出力されている様子が確認できれば OK です。
 
 ![Prometheus のレポートが正常に出力されている様子](https://i.gyazo.com/a5feae6dba9a9f4eaecae0055dd9be9e.png)
 **Prometheus のレポートが正常に出力されている様子**
@@ -198,7 +202,7 @@ cat /etc/prometheus/prometheus.tmpl.yml | \
 
 ```
 
-これで Prometheus Agent 起動のための準備は整ったため、最後に `Dockerfile` を準備します。ちなみに Prometheus Agent は `v2.32.0` で利用可能です。
+これで Prometheus Agent 起動のための準備は整ったため、最後に `Dockerfile` を準備します。ちなみに Prometheus Agent は `v2.32.0` 以降で利用可能です。
 
 ```docker:prometheus-agent/Dockerfile
 FROM --platform=arm64 alpine:3.15
@@ -207,12 +211,12 @@ ADD prometheus.tmpl.yml /etc/prometheus/
 
 RUN apk add --update --no-cache jq sed curl
 
-# ARM64 で動作する Prometheus v2.32.0 を curl でダウンロード展開する
-RUN curl -sL -O https://github.com/prometheus/prometheus/releases/download/v2.32.0-rc.0/prometheus-2.32.0-rc.0.linux-arm64.tar.gz
-RUN tar -zxvf prometheus-2.32.0-rc.0.linux-arm64.tar.gz && rm prometheus-2.32.0-rc.0.linux-arm64.tar.gz
+# ARM64 で動作する Prometheus v2.32.1 を curl でダウンロード展開する
+RUN curl -sL -O https://github.com/prometheus/prometheus/releases/download/v2.32.1/prometheus-2.32.1.linux-arm64.tar.gz
+RUN tar -zxvf prometheus-2.32.1.linux-arm64.tar.gz && rm prometheus-2.32.1.linux-arm64.tar.gz
 
 # `prometheus` コマンドを `/usr/local/bin/prometheus` に移動する
-RUN mv prometheus-2.32.0-rc.0.linux-arm64/prometheus /usr/local/bin/prometheus
+RUN mv prometheus-2.32.1.linux-arm64/prometheus /usr/local/bin/prometheus
 
 COPY ./docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
@@ -234,10 +238,12 @@ import {
   StackProps,
   aws_ecs as ecs,
   aws_logs as logs,
+  aws_aps as aps,
   aws_ecs_patterns as ecs_patterns,
   aws_iam as iam,
   aws_elasticloadbalancingv2 as elbv2,
   Duration,
+  CfnOutput,
 } from 'aws-cdk-lib';
 
 export class PrometheusAgentTestStack extends Stack {
@@ -286,6 +292,19 @@ export class PrometheusAgentTestStack extends Stack {
       iam.ManagedPolicy.fromAwsManagedPolicyName('AmazonPrometheusRemoteWriteAccess')
     )
 
+    // (2021/12/18) Amazon Managed Service for Prometheus のワークスペースを作成して、Prometheus の remote-write URL を取得する
+    const apsWorkspace = new aps.CfnWorkspace(this, `${projectName}-prom-workspace`, {
+      alias: `${projectName}-prom-workspace`,
+    });
+    const apsWorkspaceRemoteUrl = `${apsWorkspace.attrPrometheusEndpoint}api/v1/remote_write`;
+
+    // (2021/12/18) 本記事で頻出する "エンドポイント - リモート書き込み URL" をコンソールに出力する
+    new CfnOutput(this, 'prom-remote-write-url', {
+      value: apsWorkspaceRemoteUrl,
+      description: 'Prometheus Workspace の remote-write URL',
+      exportName: 'PromRemoteWriteURL',
+    });
+
     // AMP へメトリクス情報を送信するための Prometheus Agent コンテナを追加する
     const containerName = `${projectName}-prometheus-agent`
     fargateService.taskDefinition.addContainer(containerName, {
@@ -293,7 +312,8 @@ export class PrometheusAgentTestStack extends Stack {
       image: ecs.ContainerImage.fromAsset('prometheus-agent'),
       memoryReservationMiB: 128,
       environment: {
-        REMOTE_WRITE_URL: '<AMP ワークスペースのエンドポイント - リモート書き込み URL>'
+        // (2021/12/18) CDK 経由で作成した Prometheus の remote-write URL を設定する
+        REMOTE_WRITE_URL: apsWorkspaceRemoteUrl
       },
       logging: new ecs.AwsLogDriver({
         streamPrefix: `/${projectName}/prometheus-agent`,
@@ -365,12 +385,14 @@ export class PrometheusAgentTestStack extends Stack {
 ![CDK によるインフラ構築が正常に実行された時の様子](https://i.gyazo.com/c7da0f6c6b5a57edee47ae20a8026f8f.png)
 **CDK によるインフラ構築が正常に実行された時の様子**
 
-デプロイが正常に完了したことを確認したら、`Outputs` に出力されている URL の末尾に `/metrics` を付与してアクセスしてみます。出力されている URL のフォーマットは `http://<識別子>.ap-northeast-1.elb.amazonaws.com` になります。
+デプロイが正常に完了したことを確認したら、`Outputs` に出力されている **`PrometheusAgentTestStack.prometheusagenttestfargateserviceServiceURL<識別子>` の URL 末尾に `/metrics` を付与してアクセスしてみます。** 出力されている URL のフォーマットは `http://<識別子>.ap-northeast-1.elb.amazonaws.com` になります。
 
 つまり、`http://<識別子>.ap-northeast-1.elb.amazonaws.com/metrics` にアクセスしてみます。
 
 ![ALB 経由で Node.js アプリにアクセス可能なことを確認する](https://i.gyazo.com/c13a2b0efc3bb96e79b4f1f5a2886a8a.png)
 **ALB 経由で Node.js アプリにアクセス可能なことを確認する**
+
+また、`Outputs` に出力されている **`PrometheusAgentTestStack.promremotewriteurl` は後に利用する `エンドポイント - リモート書き込み URL` で使用するので控えておきます。**
 
 ここまでで AWS CDK でのインフラ構築作業は完了しました。最後に Grafana で AMP のメトリクスを可視化するための作業を進めていきます。
 
