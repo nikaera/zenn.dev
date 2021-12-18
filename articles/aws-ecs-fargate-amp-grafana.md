@@ -10,7 +10,9 @@ published: true
 # はじめに
 
 :::message
+
 この記事は [AWS Advent Calendar 2021](https://qiita.com/advent-calendar/2021/aws) の 5 日目の記事です。
+
 :::
 
 [Fargate](https://aws.amazon.com/jp/fargate/) で Node.js アプリのメトリクスを [Prometheus Agent](https://prometheus.io/blog/2021/11/16/agent/) をサイドカーコンテナとして動かして、[Amazon Managed Service for Prometheus (AMP)](https://aws.amazon.com/jp/prometheus/) に送信して [Grafana](https://grafana.com/) で見られるようにしてみました。
@@ -23,9 +25,9 @@ published: true
 
 # 動作環境
 
-* Node.js v16.13.0
-* AWS CDK 2.0.0 (build 4b6ce31)
-* Prometheus 2.32.1
+- Node.js v16.13.0
+- AWS CDK 2.0.0 (build 4b6ce31)
+- Prometheus 2.32.1
 
 # 環境構築
 
@@ -33,9 +35,7 @@ published: true
 
 **[`aws-aps`](https://docs.aws.amazon.com/cdk/api/latest/docs/aws-aps-readme.html) を利用することで AWS CDK からでも Amazon Managed Service for Prometheus のワークスペースを作成すること確認できましたので、そちらの利用を推奨いたします... 🙇🙇**
 
-**[lib/prometheus-agent-test-stack.ts](#ecs-fargate-上で-node.js-アプリおよび-prometheus-agent-を動作させる) のコードも修正済みで AWS CDK で Amazon Managed Service for Prometheus のワークスペースを作成するようにしました。そのため、下記の [AMP のワークスペースを作成する](#amp-のワークスペースを作成する) はスキップ可能です。(2021/12/18 追記)**
-
-## ~~AMP のワークスペースを作成する~~
+**[lib/prometheus-agent-test-stack.ts](#ecs-fargate-上で-node.js-アプリおよび-prometheus-agent-を動作させる) のコードも修正済みで AWS CDK で Amazon Managed Service for Prometheus のワークスペースを作成するように編集しました。(2021/12/18 追記)**
 
 :::details 手動で AMP のワークスペースを作成する手順
 
@@ -56,7 +56,7 @@ AMP ワークスペースの `エンドポイント - リモート書き込み U
 
 ## AWS CDK で環境構築する
 
-AMP 以外のインフラについては CDK で構築作業を進めます。まずは下記コマンドで CDK プロジェクトを作成します。使用言語は `TypeScript` を選択します。
+CDK で構築作業を進めます。まずは下記コマンドで CDK プロジェクトを作成します。使用言語は `TypeScript` を選択します。
 
 ```bash
 mkdir prometheus-agent-test && cd prometheus-agent-test
@@ -75,7 +75,7 @@ npm init -y
 npm install --save prom-client
 ```
 
-次に `metrics-app` フォルダ内に `index.js` を作成して下記の編集を行います。
+次に `metrics-app` フォルダ内に `index.js` を作成して下記を編集します。
 
 ```javascript:metrics-app/index.js
 'use strict';
@@ -93,7 +93,7 @@ server.on('request', async function(req, res) {
     // /metrics にアクセスしたら、Prometheus のレポートを返す
     if (req.url === '/metrics') {
         res.setHeader('Content-Type', register.contentType)
-        
+
         const metrics = await register.metrics()
         return res.end(metrics)
     } else {
@@ -128,7 +128,7 @@ CMD [ "node", "index.js" ]
 上記 `Dockerfile` 作成後、再び動作検証のため下記コマンドを実行してから、`http://localhost:8080/metrics` にアクセスしてみます。
 
 ```bash
-docker build -t prometheus-agent-test/metrics-app . 
+docker build -t prometheus-agent-test/metrics-app .
 docker run -p 8080:8080 prometheus-agent-test/metrics-app:latest
 ```
 
@@ -206,7 +206,7 @@ cat /etc/prometheus/prometheus.tmpl.yml | \
 
 ```
 
-これで Prometheus Agent 起動のための準備は整ったため、最後に `Dockerfile` を準備します。ちなみに Prometheus Agent は `v2.32.0` 以降で利用可能です。
+これで Prometheus Agent 起動のための準備は整ったため、最後に `Dockerfile` を準備します。ちなみに Prometheus Agent は `v2.32.0` 以降で利用可能です。**本記事では `v2.32.1` を利用します。**
 
 ```docker:prometheus-agent/Dockerfile
 FROM --platform=arm64 alpine:3.15
@@ -335,7 +335,7 @@ export class PrometheusAgentTestStack extends Stack {
     )
 
     // Grafana のコンテナを追加する。パスプレフィクスには dashboard を設定する
-    const grafanaDashboardContainerName = `${projectName}-grafana-dashboard`  
+    const grafanaDashboardContainerName = `${projectName}-grafana-dashboard`
     grafanaDashboardTaskDefinition.addContainer(grafanaDashboardContainerName, {
       containerName: grafanaDashboardContainerName,
       image: ecs.ContainerImage.fromRegistry('public.ecr.aws/ubuntu/grafana'),
@@ -389,9 +389,9 @@ export class PrometheusAgentTestStack extends Stack {
 ![CDK によるインフラ構築が正常に実行された時の様子](https://i.gyazo.com/c7da0f6c6b5a57edee47ae20a8026f8f.png)
 **CDK によるインフラ構築が正常に実行された時の様子**
 
-デプロイが正常に完了したことを確認したら、`Outputs` に出力されている **`PrometheusAgentTestStack.prometheusagenttestfargateserviceServiceURL<識別子>` の URL 末尾に `/metrics` を付与してアクセスしてみます。** 出力されている URL のフォーマットは `http://<識別子>.ap-northeast-1.elb.amazonaws.com` になります。
+デプロイが正常に完了したのを確認したら、`Outputs` に出力されている **`PrometheusAgentTestStack.prometheusagenttestfargateserviceServiceURL<識別子>` の URL 末尾に `/metrics` を付与してアクセスしてみます。** 出力されている URL のフォーマットは `http://<識別子>.ap-northeast-1.elb.amazonaws.com` になります。
 
-つまり、`http://<識別子>.ap-northeast-1.elb.amazonaws.com/metrics` にアクセスしてみます。
+つまり、**`http://<識別子>.ap-northeast-1.elb.amazonaws.com/metrics` にアクセスします。**
 
 ![ALB 経由で Node.js アプリにアクセス可能なことを確認する](https://i.gyazo.com/c13a2b0efc3bb96e79b4f1f5a2886a8a.png)
 **ALB 経由で Node.js アプリにアクセス可能なことを確認する**
@@ -446,10 +446,10 @@ Prometheus (AMP) に送信したメトリクスを Grafana で可視化するた
 echo 'GET http://<識別子>.ap-northeast-1.elb.amazonaws.com/metrics' | vegeta attack -duration=5s | vegeta report
 ```
 
-その後、再び Grafana のダッシュボードを見にいきます。負荷をかけた時間帯のみグラフに変化があることが確認できるはずです。
+その後、再び Grafana のダッシュボードを見にいきます。負荷をかけた時間帯のみグラフに変化があることを確認できるはずです。
 
-![ダッシュボードの CPU 使用率のグラフに変化があったことが確認できる](https://i.gyazo.com/d019d33d3e4bd321ae4d1f4bbecc6ef8.png)
-**ダッシュボードの CPU 使用率のグラフに変化があったことが確認できる**
+![ダッシュボードの CPU 使用率のグラフに変化があったことを確認できる](https://i.gyazo.com/d019d33d3e4bd321ae4d1f4bbecc6ef8.png)
+**ダッシュボードの CPU 使用率のグラフに変化があったことを確認できる**
 
 # おわりに
 
@@ -459,15 +459,15 @@ ECS のサービスでタスクを実行する場合は [サービスディス�
 
 また Node.js アプリを作成する際に利用した `prom-client` で [カスタムメトリクス](https://github.com/siimon/prom-client#custom-metrics) を作成することで、監視したい項目を自由に増やすことも可能です。
 
-本記事が ECS Fargate の監視を行う際の検討材料の 1つとなれたら幸いです。
+本記事が ECS Fargate を監視する際の検討材料の 1 つとなれたら幸いです。
 
 # 参考リンク
 
-* [AWS Fargate（サーバーやクラスターの管理が不要なコンテナの使用）\| AWS](https://aws.amazon.com/jp/fargate/)
-* [Introducing Prometheus Agent Mode, an Efficient and Cloud\-Native Way for Metric Forwarding \| Prometheus](https://prometheus.io/blog/2021/11/16/agent/)
-* [Amazon Managed Service for Prometheus \| フルマネージド Prometheus \| Amazon Web Services](https://aws.amazon.com/jp/prometheus/)
-* [Grafana: The open observability platform \| Grafana Labs](https://grafana.com/)
-* [AWS クラウド開発キット – アマゾン ウェブ サービス](https://aws.amazon.com/jp/cdk/)
-* [siimon/prom\-client: Prometheus client for node\.js](https://github.com/siimon/prom-client)
-* [tsenart/vegeta: HTTP load testing tool and library\. It's over 9000\!](https://github.com/tsenart/vegeta)
-* [NodeJS Application Dashboard dashboard for Grafana \| Grafana Labs](https://grafana.com/grafana/dashboards/11159)
+- [AWS Fargate（サーバーやクラスターの管理が不要なコンテナの使用）\| AWS](https://aws.amazon.com/jp/fargate/)
+- [Introducing Prometheus Agent Mode, an Efficient and Cloud\-Native Way for Metric Forwarding \| Prometheus](https://prometheus.io/blog/2021/11/16/agent/)
+- [Amazon Managed Service for Prometheus \| フルマネージド Prometheus \| Amazon Web Services](https://aws.amazon.com/jp/prometheus/)
+- [Grafana: The open observability platform \| Grafana Labs](https://grafana.com/)
+- [AWS クラウド開発キット – アマゾン ウェブ サービス](https://aws.amazon.com/jp/cdk/)
+- [siimon/prom\-client: Prometheus client for node\.js](https://github.com/siimon/prom-client)
+- [tsenart/vegeta: HTTP load testing tool and library\. It's over 9000\!](https://github.com/tsenart/vegeta)
+- [NodeJS Application Dashboard dashboard for Grafana \| Grafana Labs](https://grafana.com/grafana/dashboards/11159)
