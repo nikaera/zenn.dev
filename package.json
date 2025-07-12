@@ -19,21 +19,12 @@
   },
   "homepage": "https://github.com/nikaera/zenn.dev#readme",
   "devDependencies": {
-<<<<<<< HEAD
     "node-fetch": ">=3.3.2",
     "textlint": "^15.2.0",
     "textlint-rule-preset-ja-spacing": "^2.4.3",
     "textlint-rule-preset-ja-technical-writing": "^12.0.2",
     "textlint-rule-spellcheck-tech-word": "^5.0.0",
+    "textlint-rule-preset-ai-writing": "^1.1.0",
     "zenn-cli": "^0.2.1"
-=======
-    "node-fetch": ">=3.1.0",
-    "ssri": ">=8.0.1",
-    "textlint": "^12.1.0",
-    "textlint-rule-preset-ja-spacing": "^2.0.2",
-    "textlint-rule-preset-ja-technical-writing": "^7.0.0",
-    "textlint-rule-spellcheck-tech-word": "^5.0.0",
-    "zenn-cli": "^0.1.99"
->>>>>>> baf30f3da3c1dc6fba6041e05c2c0d67cf88633f
   }
 }

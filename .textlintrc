@@ -3,6 +3,7 @@
   "rules": {
     "preset-ja-spacing": false,
     "preset-ja-technical-writing": true,
-    "spellcheck-tech-word": true
+    "spellcheck-tech-word": true,
+    "@textlint-ja/preset-ai-writing": true
   }
 }
