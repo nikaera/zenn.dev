@@ -1,4 +1,5 @@
 ---
+dev_article_id: 640769
 title: "Hugo + GitHub Pages + GitHub Actions で独自ドメインのウェブサイトを構築する"
 emoji: "😊"
 type: "tech" # tech: 技術記事 / idea: アイデア
@@ -6,9 +7,9 @@ topics: ["hugo", "githubactions", "githubpages"]
 published: true
 ---
 
-::: message info
+:::message
 
-この記事は [Static Site Generator Advent Calendar 2020](https://qiita.com/advent-calendar/2020/static-site-generator) 10日目の記事です。
+この記事は [Static Site Generator Advent Calendar 2020](https://qiita.com/advent-calendar/2020/static-site-generator) 10 日目の記事です。
 
 :::
 
@@ -26,6 +27,7 @@ Hugo で自分のブログを構築して GitHub Pages で公開できるよう�
 上記までの作業をすることで、自分のブログを書いたり更新することだけに集中できる環境を整えることができました。ウェブサイトを作りこむ以外は、簡単ないくつかの作業をするだけで Hugo で満足のいく自分のブログを書く環境が整えられたので、その手順についてまとめてみました。
 
 ちなみに本記事の手順で実際に作成した私のブログは下記です。
+
 https://nikaera.com/
 
 # Hugo を PC にインストールする
@@ -60,7 +62,7 @@ Hugo のコンフィグファイルのデフォルトフォーマットは [TOML
 
 後述しますが、一部の Hugo のテーマはコンフィグファイルのサンプルが JSON ファイルで書かれています。その場合は、新規で設定するコンフィグファイルのフォーマットも JSON で統一しておくと各種設定項目の調整が楽になりそうです。
 
-:::message info
+:::message
 
 もしくは[こちら](https://github.com/sclevine/yj)のようなコンバーターを使用したり、[こちら](https://pseitz.github.io/toml-to-json-online-converter/)のようなウェブのコンバーターを使用して、設定ファイルを JSON から TOML フォーマットに変更しても良さそうです。
 
@@ -124,7 +126,7 @@ GitHub Actions を用いてデプロイできるようにした際の利点と�
 
 結局原因はよく分からなかったのですが、GitHub Actions 経由でデプロイするようにしたところ直りました。**CI 経由でデプロイできるようになると、こういった実行環境の違いによる挙動も気にする必要が無くなります。**
 
-:::message info
+:::message
 
 一応 Windows 環境で発生した SRI 関連のバグは Hugo で該当するテンプレートファイルを `layouts` フォルダを利用して差し替えて、integrity の設定内容を空にすることで、本番環境でも stylesheet が適用できるようになったことは確認しました。[詳細はこちら](https://stackoverflow.com/a/65052963)。
 
@@ -195,12 +197,12 @@ jobs:
 
 `- name: Deploy` の項目で設定した各種パラメータは下記になります。
 
-| キー | 説明 |
-| ------- | ------- |
-| deploy_key | デプロイ時に使用する秘密鍵 |
-| external_repository | デプロイ先のリモートリポジトリ |
-| publish_branch | デプロイ先のリモートリポジトリのブランチ |
-| cname | 設定するカスタムドメイン名 |
+| キー                | 説明                                     |
+| ------------------- | ---------------------------------------- |
+| deploy_key          | デプロイ時に使用する秘密鍵               |
+| external_repository | デプロイ先のリモートリポジトリ           |
+| publish_branch      | デプロイ先のリモートリポジトリのブランチ |
+| cname               | 設定するカスタムドメイン名               |
 
 `deploy_key` にはシークレットに登録した秘密鍵を設定します。`external_repository` には Hugo をビルドした際のデプロイ先リポジトリを `<ユーザ名>/<リポジトリ名>` のフォーマットで指定します。`publish_branch` はデプロイ先として使用するブランチ名になります。`cname` には自分が設定したいドメイン名を指定します。`cname` の [詳細](https://docs.github.com/ja/free-pro-team@latest/github/working-with-github-pages/managing-a-custom-domain-for-your-github-pages-site) はこちらからご確認いただけます。
 
@@ -210,14 +212,13 @@ GitHub Pages にカスタムドメインを利用する際は、該当するド�
 
 また、カスタムドメインの設定後は特別な理由がない限りは、デプロイ用リポジトリで [HTTPS 強制の設定](https://docs.github.com/ja/free-pro-team@latest/github/working-with-github-pages/securing-your-github-pages-site-with-https) をしておくことオススメします。
 
-:::message info
+:::message
 
 ちなみに GitHub Pages で利用している証明書は [Let's Encrypt](https://github.blog/2018-05-01-github-pages-custom-domains-https/) のものになります。
 
 :::
 
 設定作業はこれで完了です。あとは実際に Hugo プロジェクトを更新後、`hugo-blog` リポジトリに push することでビルドからデプロイまで GitHub Actions で行われるようになったかを確認していきます。
-
 
 ## Hugo プロジェクトの更新時に自動でデプロイが行われるか確認する
 

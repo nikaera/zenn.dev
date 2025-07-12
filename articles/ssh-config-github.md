@@ -1,4 +1,5 @@
 ---
+dev_article_id: 640772
 title: "GitHub 接続時の ~/.ssh/config の書き方"
 emoji: "🔥"
 type: "tech" # tech: 技術記事 / idea: アイデア
@@ -36,7 +37,7 @@ Host github.com
 早速 `github.com` 接続時に正しく認証が通っているか確認するため、適当なプライベートリポジトリを `git clone` してみます。
 
 ![git clone の実行結果 (成功)](https://i.gyazo.com/98db386f77ab94590c162279e9e039e9.png)
-*プライベートリポジトリを `git clone` した実行結果 (成功)*
+_プライベートリポジトリを `git clone` した実行結果 (成功)_
 
 無事に `git clone` できることが確認できたら成功です。
 
@@ -95,7 +96,7 @@ origin  github-A:nikaera/private-repository.git (push)
 この状態で先ほど `git clone` してきたプライベートリポジトリ内で `git ls-remote origin` コマンドを実行してみて正常に結果が取得できれば正しく設定できています。
 
 ![`A` の接続設定で `git ls-remote origin` の実行に成功する](https://i.gyazo.com/0b5cbb50e44239afa000b69295f0eebe.png)
-*`A` の接続設定で `git ls-remote origin` の実行に成功する*
+_`A` の接続設定で `git ls-remote origin` の実行に成功する_
 
 次に `B` のアカウント情報で接続を試みます。
 
@@ -120,7 +121,7 @@ origin  github-B:nikaera/private-repository.git (push)
 `B` には先ほどのプライベートリポジトリの読み取り権限が無い状態で、`git ls-remote origin` コマンドを実行してみると失敗するはずです。
 
 ![`B` の接続設定で `git ls-remote origin` の実行に失敗する](https://i.gyazo.com/f8fc81d537453512bda2c8f64bde8821.png)
-*`B` の接続設定で `git ls-remote origin` の実行に失敗する*
+_`B` の接続設定で `git ls-remote origin` の実行に失敗する_
 
 これで今後は `git` のリモートリポジトリ URL を一度書き換えておくだけで、それぞれ適切な秘密鍵で GitHub 認証する設定ができました。
 
@@ -138,10 +139,10 @@ Host github.com
     Compression yes # Git でのファイル転送時に圧縮する
 ```
 
-| 項目 | 説明 | 型 |
-| ---- | ---- | ---- |
+| 項目           | 説明                                                                | 型                      |
+| -------------- | ------------------------------------------------------------------- | ----------------------- |
 | IdentitiesOnly | `IdentityFile` で指定した鍵ファイルでのみ認証を行うかどうか指定する | boolean (`yes` or `no`) |
-| Compression | 圧縮転送を行うかどうか指定する | boolean (`yes` or `no`) |
+| Compression    | 圧縮転送を行うかどうか指定する                                      | boolean (`yes` or `no`) |
 
 `IdentityFile` で指定したファイル以外で認証が通ってしまう状況だと、意図したアカウントで適切に認証が通せていない可能性が出てきてしまいます。
 
@@ -166,8 +167,8 @@ Host github.com
     Port 12345 # 接続先のポートが 22 以外の場合指定する
 ```
 
-| 項目 | 説明 | 型 |
-| ---- | ---- | ---- |
+| 項目 | 説明                             | 型                           |
+| ---- | -------------------------------- | ---------------------------- |
 | Port | SSH 接続時のポート番号を設定する | number (ex: 22, 22222, etc.) |
 
 例えば自前で用意した Git リポジトリに対して接続する場合、SSH のポートがセキュリティ上の理由等でウェルノウンポートの `22` ではない場合がありえます。その場合は `Port` を明示的に指定することで接続時のポート番号を適切な値に設定しておく必要が出てくるでしょう。

@@ -1,8 +1,9 @@
 ---
+dev_article_id: 640767
 title: "Actix web で HttpOnly な Cookie を設定する"
 emoji: "🍪"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: ["rust", "actixweb", "cookie"]
+topics: ["rust", "actixweb", "cookie", "authentication"]
 published: true
 ---
 
@@ -16,10 +17,10 @@ published: true
 
 # 動作環境
 
-* Mac mini (M1, 2020)
-  * Rust 1.49
-  * Actix web 3
-  * Serde 1.0
+- Mac mini (M1, 2020)
+  - Rust 1.49
+  - Actix web 3
+  - Serde 1.0
 
 ```toml:Cargo.toml
 [package]
@@ -50,17 +51,17 @@ use serde::{Deserialize};
 
 /// Cookie に設定するキー
 /// 今回は cookie_test をキーとして使用する
-/// 
+///
 const KEY: &str = "cookie_test";
 
 /// 存在していれば、HTTP Request ヘッダーから Cookie 文字列を取得する関数
-/// 
+///
 /// # Arguments
 /// * `req` - actix_web::HttpRequest
-/// 
+///
 /// # Return value
 /// * Option<String> - key=value; key1=value1;~ のような Cookie の文字列
-/// 
+///
 fn get_cookie_string_from_header(req: HttpRequest) -> Option<String> {
     let cookie_header = req.headers().get("cookie");
     if let Some(v) = cookie_header {
@@ -71,14 +72,14 @@ fn get_cookie_string_from_header(req: HttpRequest) -> Option<String> {
 }
 
 /// 存在していれば、特定のキーで Cookie に設定された値を取得するための関数
-/// 
+///
 /// # Arguments
 /// * `key` - Cookie から取り出したい値のキー
 /// * `cookie_string` - get_cookie_string_from_header 関数で取得した Cookie の文字列
-/// 
+///
 /// # Return value
 /// * Option<String> - Cookie に設定されている値を取得する
-/// 
+///
 fn get_cookie_value(key: &str, cookie_string: String) -> Option<String> {
     // 取得した Cookie 文字列を ; で分割してループで回す
     let kv: Vec<&str> = cookie_string.split(';').collect();
@@ -100,13 +101,13 @@ fn get_cookie_value(key: &str, cookie_string: String) -> Option<String> {
 }
 
 /// 特定のキーで環境変数から値を取得するための関数
-/// 
+///
 /// # Arguments
 /// * `key` - 環境変数から取り出したい値のキー
-/// 
+///
 /// # Return value
 /// * String - 環境変数の値を文字列として取得する
-/// 
+///
 fn get_env(key: &str) -> String {
     match env::var(key) {
         Ok(value) => return value,
@@ -117,10 +118,10 @@ fn get_env(key: &str) -> String {
 
 /// 環境変数に設定された HTTPS の値が 1 か判定する
 /// Cookie の属性に Secure を付与するか判定するのに使用する
-/// 
+///
 /// # Return value
 /// * bool - Secure 属性を付与するか判定するための真偽値
-/// 
+///
 fn is_https() -> bool {
     return get_env("HTTPS") == "1";
 }
@@ -132,12 +133,12 @@ pub struct CookieQuery {
 }
 
 /// Cookie を設定するために用意したルート
-/// 
+///
 /// # Example
-/// 
+///
 /// 例えば GET /cookie?value=test にアクセスした場合、
 /// Cookie に cookie_test=test が設定されるようになる
-/// 
+///
 #[get("/cookie")]
 async fn set_cookie(query: web::Query<CookieQuery>) -> Result<HttpResponse, Error> {
     // 設定したい Cookie を作成する
@@ -191,12 +192,12 @@ Actix web には [`Cookie` クラス](https://docs.rs/actix-web/3.3.2/actix_web/
 
 # 動作検証
 
-今回用意した Actix web のサンプルコードには 2つのエンドポイントを用意しました。
+今回用意した Actix web のサンプルコードには 2 つのエンドポイントを用意しました。
 
-| URI | 説明 |
-| ---- | ---- |
+| URI           | 説明                                           |
+| ------------- | ---------------------------------------------- |
 | `GET /cookie` | `value` クエリで HttpOnly な Cookie を設定する |
-| `GET /` | `GET /cookie` で設定した Cookie を確認する |
+| `GET /`       | `GET /cookie` で設定した Cookie を確認する     |
 
 `cargo run` で Actix web のサンプルを起動した後に、ブラウザで `http://localhost:8080/cookie?value=sample` にアクセスしてみます。またその際に HTTP レスポンスヘッダーを確認したいため、[開発者ツール](https://developer.mozilla.org/ja/docs/Learn/Common_questions/What_are_browser_developer_tools)を開いておきます。
 
@@ -223,10 +224,10 @@ Actix web で割と汎用的に使えそうな知識として Cookie の設定�
 
 # 参考リンク
 
-* [Install Rust \- Rust Programming Language](https://www.rust-lang.org/tools/install)
-* [Rust \- Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust)
-* [VSCodeでRustインストールしたのに「Rustup not available」が出るとき \(備忘録\) \- TAKOYAKING’s blog](https://takoyaking.hatenablog.com/entry/2020/01/05/180000)
-* [Set\-Cookie \- HTTP \| MDN](https://developer.mozilla.org/ja/docs/Web/HTTP/Headers/Set-Cookie)
-* [actix/actix\-web: Actix Web is a powerful, pragmatic, and extremely fast web framework for Rust\.](https://github.com/actix/actix-web)
-* [actix\_web::http::Cookie \- Rust](https://docs.rs/actix-web/3.3.2/actix_web/http/struct.Cookie.html)
-* [ブラウザー開発者ツールとは？ \- ウェブ開発を学ぶ \| MDN](https://developer.mozilla.org/ja/docs/Learn/Common_questions/What_are_browser_developer_tools)
+- [Install Rust \- Rust Programming Language](https://www.rust-lang.org/tools/install)
+- [Rust \- Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust)
+- [VSCode で Rust インストールしたのに「Rustup not available」が出るとき \(備忘録\) \- TAKOYAKING’s blog](https://takoyaking.hatenablog.com/entry/2020/01/05/180000)
+- [Set\-Cookie \- HTTP \| MDN](https://developer.mozilla.org/ja/docs/Web/HTTP/Headers/Set-Cookie)
+- [actix/actix\-web: Actix Web is a powerful, pragmatic, and extremely fast web framework for Rust\.](https://github.com/actix/actix-web)
+- [actix_web::http::Cookie \- Rust](https://docs.rs/actix-web/3.3.2/actix_web/http/struct.Cookie.html)
+- [ブラウザー開発者ツールとは？ \- ウェブ開発を学ぶ \| MDN](https://developer.mozilla.org/ja/docs/Learn/Common_questions/What_are_browser_developer_tools)

@@ -1,4 +1,5 @@
 ---
+dev_article_id: 640766
 title: "MediaPackage 用の CloudFront ディストリビューションを AWS SDK で作成する"
 emoji: "🎥"
 type: "tech" # tech: 技術記事 / idea: アイデア
@@ -378,7 +379,6 @@ export class CloudFrontClientForMediaPackage {
 
 しかし、`AllowedMethods` や `WhitelistedNames` には `Items` に指定した項目数である `2` や `3` を `Quantity` に入力しています。**`Quantity` の数と `Items` の項目数が合わないと、エラーが発生するため、注意が必要です。**
 
-
 ## `mediapackage:cloudfront_assoc` を定義する意味
 
 CloudFront ディストリビューションのタグに **`mediapackage:cloudfront_assoc` で紐付ける MediaPackage のチャンネル ARN を指定することで、MediaPackage コンソールから紐付けられた CloudFront ディストリビューション情報を参照できるようになります。**
@@ -418,11 +418,13 @@ const config = distribution.Distribution.DistributionConfig;
 config.Enabled = false;
 
 // 4. 3. で改変した内容を updateDistribution で CloudFront ディストリビューションに反映する
-return await this.cloudFront.updateDistribution({
+return await this.cloudFront
+  .updateDistribution({
     Id: id,
     IfMatch: distribution.ETag,
-    DistributionConfig: config
-}).promise();
+    DistributionConfig: config,
+  })
+  .promise();
 ```
 
 # おわりに

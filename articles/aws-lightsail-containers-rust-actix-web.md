@@ -1,4 +1,5 @@
 ---
+dev_article_id: 640765
 title: "AWS Lightsail Containers に Actix web をデプロイする"
 emoji: "⛵"
 type: "tech" # tech: 技術記事 / idea: アイデア
@@ -80,7 +81,7 @@ services:
       - ./server/.env
     ports:
       - 8080:8080
- 
+
 ```
 
 上記を自分の Actix web プロジェクトに応じて改変し `docker-compose up` して動作検証します。動作検証ができ次第、`docker-compose build` を実行して Docker イメージをビルドします。ビルドに成功したら次は Docker Hub にイメージを push します。
@@ -106,7 +107,7 @@ AWS Console にログイン後、[Lightsail サービス](https://lightsail.aws.
 ![スクリーンショット 2021-01-23 18.57.06.png](https://i.gyazo.com/25c1b55863c4d77249d3105ba7a97afd.png)
 **Containers タブを選択すると出てくる、`Create container services` ボタンをクリックする**
 
-`Create container services` ボタンをクリックした遷移先の画面で、リージョンやキャパシティ (Micro であれば 3ヶ月間のみ無料で利用可能) 等を選択して、名称を入力します。今回は最初にデプロイのための準備をすでに済ませているので、Container Service を作成するついでにデプロイ設定も行います。
+`Create container services` ボタンをクリックした遷移先の画面で、リージョンやキャパシティ (Micro であれば 3 ヶ月間のみ無料で利用可能) 等を選択して、名称を入力します。今回は最初にデプロイのための準備をすでに済ませているので、Container Service を作成するついでにデプロイ設定も行います。
 
 デプロイ設定は `Set up your first deployment` の項目から行うことが可能です。
 
@@ -167,6 +168,6 @@ AWS Lightsail Containers を利用して Actix web プロジェクトをデプ�
 
 # 参考リンク
 
-* [Lightsail コンテナ: クラウドでコンテナを実行する簡単な方法 \| Amazon Web Services ブログ](https://aws.amazon.com/jp/blogs/news/lightsail-containers-an-easy-way-to-run-your-containers-in-the-cloud/)
-* [rust \- Docker Hub](https://hub.docker.com/_/rust)
-* [Enabling custom domains for your Amazon Lightsail distributions \| Lightsail Documentation](https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-enabling-distribution-custom-domains)
+- [Lightsail コンテナ: クラウドでコンテナを実行する簡単な方法 \| Amazon Web Services ブログ](https://aws.amazon.com/jp/blogs/news/lightsail-containers-an-easy-way-to-run-your-containers-in-the-cloud/)
+- [rust \- Docker Hub](https://hub.docker.com/_/rust)
+- [Enabling custom domains for your Amazon Lightsail distributions \| Lightsail Documentation](https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-enabling-distribution-custom-domains)
