@@ -10,7 +10,7 @@ jobs:
     if: contains(github.event.head_commit.message, '[skip ci]') == false
     steps:
       - name: setup node project
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: get modified files
         id: files
         uses: jitterbit/get-changed-files@v1
@@ -20,7 +20,7 @@ jobs:
             echo "${changed_file}" >> added_modified.txt
           done
       - name: dev.to action step
-        uses: nikaera/sync-zenn-with-dev-action@v1.1
+        uses: nikaera/sync-zenn-with-dev-action@v2.0.0
         id: dev-to
         with:
           api_key: ${{ secrets.api_key }}
