@@ -1,4 +1,5 @@
 ---
+dev_article_id: 2682786
 title: "Flutter で本格的な HTTP キャッシュライブラリ「AeroCache」を作ってみた"
 emoji: "☁️"
 type: "idea"
