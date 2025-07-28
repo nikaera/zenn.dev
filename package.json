@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/nikaera/zenn.dev#readme",
   "devDependencies": {
-    "@textlint-ja/textlint-rule-preset-ai-writing": "^1.5.0",
+    "@textlint-ja/textlint-rule-preset-ai-writing": "^1.6.0",
     "node-fetch": ">=3.3.2",
     "textlint": "^15.2.0",
     "textlint-rule-preset-ai-writing": "^1.1.0",
