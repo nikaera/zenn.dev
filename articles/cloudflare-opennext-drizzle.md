@@ -4,7 +4,7 @@ title: "OpenNext + Drizzle で Cloudflare D1 環境を最も楽に構築する"
 emoji: "🌧️"
 type: "tech"
 topics: ["drizzleorm", "cloudflare", "d1", "nextjs", "typescript"]
-published: false
+published: true
 ---
 
 # はじめに
@@ -97,7 +97,7 @@ npm install -D drizzle-kit drizzle-seed vitest
       - 例: `e216461a-74c3-40b2-8819-9fa351827304`
 
 2. **Wrangler CLI で新規作成する場合**  
-    - 下記でコマンド成功時に出力される JSON フィールドの値を用いる 
+    - 下記コマンド成功時に出力される JSON フィールドの値を用いる 
       - `database_name` が `<your-database-name>`
       - `database_id` が `<your-database-id>`
     ```bash
