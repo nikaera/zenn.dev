@@ -1,4 +1,5 @@
 ---
+dev_article_id: 2747536
 title: "OpenNext + Drizzle で Cloudflare D1開発・テスト環境をシームレスに構築する"
 emoji: "🌧️"
 type: "tech"
