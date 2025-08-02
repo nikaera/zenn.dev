@@ -96,6 +96,8 @@ npm install -D drizzle-kit drizzle-seed vitest
     - `<your-database-id>` は詳細画面の「UUID」
       - 例: `e216461a-74c3-40b2-8819-9fa351827304`
 
+[![ダッシュボード上の `my-app-dev` の情報](https://i.gyazo.com/f01b717bc30e793e7630ca613b364946.png)](https://gyazo.com/f01b717bc30e793e7630ca613b364946)
+
 2. **Wrangler CLI で新規作成する場合**  
     - 下記コマンド成功時に出力される JSON フィールドの値を用いる 
       - `database_name` が `<your-database-name>`
