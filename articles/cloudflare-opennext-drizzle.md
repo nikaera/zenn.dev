@@ -1,5 +1,5 @@
 ---
-title: "OpenNext + Drizzle で Cloudflare D1開発・テスト環境をシームレスに構築する"
+title: "OpenNext + Drizzle で Cloudflare D1 環境を網羅的に構築する"
 emoji: "🌧️"
 type: "tech"
 topics: ["drizzleorm", "cloudflare", "d1", "nextjs", "typescript"]
