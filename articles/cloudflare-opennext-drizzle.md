@@ -427,8 +427,7 @@ npm run db:mgn:prd
 ```
 
 正常にコマンド実行が成功すれば、Cloudflare Dashboard の「D1 SQL データベース」から `/tables` コマンドで生成されたテーブルが確認できるはずです。
-
-![コンソールから `/tables` でテーブルを確認](https://i.gyazo.com/8389661ed328904542838c9666d78ac2.png)
+[![コンソールから `/tables` でテーブルを確認](https://i.gyazo.com/1ca0a8b4ad54d02a93ae568ca92b8f87.png)](https://gyazo.com/1ca0a8b4ad54d02a93ae568ca92b8f87)
 
 # まとめ
 
