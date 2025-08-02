@@ -63,6 +63,8 @@ npm install -D drizzle-kit drizzle-seed vitest
 
 `wrangler.jsonc` に D1 データベースの情報を追記します。
 
+`<your-database-name>` と `<your-database-id>` には、D1 データベースの「データベース名」と「データベースID」を指定します。値の確認・発行方法は後述します。
+
 ```json:wrangler.jsonc
 {
   "$schema": "node_modules/wrangler/config-schema.json",
@@ -81,9 +83,6 @@ npm install -D drizzle-kit drizzle-seed vitest
   ]
 }
 ```
-
-`<your-database-name>` と `<your-database-id>` には、  
-D1 データベースの「データベース名」と「データベースID」をそれぞれ指定します。
 
 ### 値の確認・発行方法
 
@@ -219,7 +218,7 @@ export const messages = sqliteTable('messages', {
 
 ## 5. テスト環境の構築
 
-`tests/db.ts` でテスト用のユーティリティ関数を作成します。
+`tests/db.ts` でテスト用のユーティリティ関数を作成します。テスト用データベースの作成・マイグレーションの適用・テストデータの投入などを行う関数をまとめています。  
 
 ```typescript:tests/db.ts
 import { createClient } from '@libsql/client/node';
@@ -311,7 +310,7 @@ export async function resetDatabase(db: any) {
 
 ## 6. テストの実装
 
-`tests/db.test.ts` で実際のテストを実装します。
+`tests/db.test.ts` で実際のテストを実装します。このテストで、データベースの接続やクエリ、モデルの動作や挙動などが正しく機能するかどうかを検証します。
 
 ```typescript:tests/db.test.ts
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
@@ -423,6 +422,10 @@ npm run db:client
 # 本番環境でのマイグレーション
 npm run db:mgn:prd
 ```
+
+正常にコマンド実行が成功すれば、Cloudflare Dashboard の「D1 SQL データベース」から `/tables` コマンドで生成されたテーブルが確認できるはずです。
+
+![コンソールから `/tables` でテーブルを確認](https://i.gyazo.com/8389661ed328904542838c9666d78ac2.png)
 
 # まとめ
 
