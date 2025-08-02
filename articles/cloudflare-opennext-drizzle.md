@@ -1,4 +1,5 @@
 ---
+dev_article_id: 2747536
 title: "OpenNext + Drizzle で Cloudflare D1 環境を網羅的に構築する"
 emoji: "🌧️"
 type: "tech"
